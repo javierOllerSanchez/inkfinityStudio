@@ -69,14 +69,14 @@ export const apps = {
 };
 
 export const story = {
-  title: 'Ink, friendship and a little drama',
-  text: "We met in first year at university in Almería, between lecture notes, vending-machine coffee and bugs that weren't ours. We started Inkfinity to make apps with our own ink. Along the way, a friend switched sides and set up his own little shop. So we're back at the inkwell on a very serious mission: making the apps he can't. Better, honest and with a sense of humour.",
+  title: 'Ink, friendship and drama',
+  text: "We're Computer Engineering students in Almería and we've known each other since first year. We started Inkfinity to make apps with our own ink. Along the way, a friend switched sides and set up his own little shop. Now we're back at the inkwell with a clear goal: making better apps than his, honest and well built.",
   milestonesLabel: 'Milestones',
   milestones: [
-    { year: '[YEAR]', text: "First year at university in Almería. We meet and nobody can split us up. Almost." },
-    { year: '[YEAR]', text: 'Inkfinity is born: lots of ink, zero budget and an octopus with too many ideas.' },
-    { year: '[YEAR]', text: 'A friend switches sides. We lose a tentacle, but not the drive.' },
-    { year: '[YEAR]', text: 'Back at the inkwell. Competition, start shaking.' },
+    { year: '2024', text: "First year of Computer Engineering in Almería. We meet." },
+    { year: '2025', text: "Inkfinity is born: lots of ink, zero budget and a baby squid with too many ideas." },
+    { year: '2026', text: "A friend switches sides. We lose a tentacle, not the drive." },
+    { year: '2027', text: "Back at the inkwell with apps of our own." },
   ],
 };
 

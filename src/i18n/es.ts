@@ -71,15 +71,15 @@ export const apps = {
 };
 
 export const story = {
-  title: 'Tinta, amistad y un poco de drama',
-  text: 'Nos conocimos en primero de carrera en Almería, entre apuntes, cafés de máquina y bugs que no eran nuestros. Montamos Inkfinity para hacer apps con nuestra propia tinta. Por el camino, un amigo cambió de bando y montó su propio chiringuito. Así que hemos vuelto al tintero con una misión muy seria: hacer las apps que él no sabe hacer. Mejores, honestas y con gracia.',
+  title: 'Tinta, amistad y drama',
+  text: "Somos estudiantes de Ingeniería Informática en Almería y nos conocemos desde primero de carrera. Montamos Inkfinity para hacer apps con nuestra propia tinta. Por el camino, un amigo cambió de bando y montó su propio chiringuito. Ahora volvemos al tintero con un objetivo claro: hacer apps mejores que las suyas, honestas y bien hechas.",
   milestonesLabel: 'Hitos',
   // Entre 2 y 4 hitos, del más antiguo al más reciente
   milestones: [
-    { year: '[AÑO]', text: 'Primero de carrera en Almería. Nos conocemos y ya no hay quien nos separe. Casi.' },
-    { year: '[AÑO]', text: 'Nace Inkfinity: mucha tinta, cero presupuesto y un pulpo con demasiadas ideas.' },
-    { year: '[AÑO]', text: 'Un amigo cambia de bando. Perdemos un tentáculo, pero no las ganas.' },
-    { year: '[AÑO]', text: 'Volvemos al tintero. Que tiemble la competencia.' },
+    { year: '2024', text: "Primero de Ingeniería Informática en Almería. Nos conocemos." },
+    { year: '2025', text: "Nace Inkfinity: mucha tinta, cero presupuesto y un chipirón con demasiadas ideas." },
+    { year: '2026', text: "Un amigo cambia de bando. Perdemos un tentáculo, no las ganas." },
+    { year: '2027', text: "Volvemos al tintero con apps propias." },
   ],
 };
 
