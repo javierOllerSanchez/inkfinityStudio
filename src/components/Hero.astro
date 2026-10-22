@@ -152,9 +152,10 @@ const borron = borronRaw.replace('<path d="M160 138', '<path class="wave" d="M16
     .mascot { animation: shutter 1100ms var(--ease-out) both; }
     .borron { animation: settle 1400ms var(--ease-out) both; }
     .borron :global(.wave) { animation: wave 2.4s ease-in-out 1.2s infinite alternate; }
-    /* El resto de baldosas sube escalonado; el titular solo se desplaza (sin opacidad, para no retrasar el LCP) */
-    .name, .lead, .crew { animation: rise 700ms var(--ease-out) both; }
-    .title { animation: rise-solid 700ms var(--ease-out) both; }
+    /* El resto de baldosas sube escalonado. Logotipo y titular solo se desplazan:
+       sin opacidad, porque el logotipo es el LCP y el fundido lo retrasaba */
+    .lead, .crew { animation: rise 700ms var(--ease-out) both; }
+    .name, .title { animation: rise-solid 700ms var(--ease-out) both; }
     .title { animation-delay: 70ms; }
     .lead { animation-delay: 140ms; }
     .crew { animation-delay: 210ms; }

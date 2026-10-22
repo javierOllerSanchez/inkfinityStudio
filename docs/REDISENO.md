@@ -64,22 +64,22 @@ La marca manda (CLAUDE.md la declara no negociable). Donde la skill y la marca c
 
 Todo el sitio está en el tablero: cabecera, hero, reglas, apps, crew, contacto, pie, `/privacidad` y `/404`.
 
-**Lighthouse 12.6.1** (build de producción, Chrome headless):
+**Lighthouse 12.6.1** (build de producción, Chrome headless), con las fuentes servidas desde el sitio y el CSS incrustado:
 
-| Página | Rendimiento | Accesibilidad | Buenas prácticas | SEO |
-|---|---|---|---|---|
-| `/` móvil | 96 | 100 | 100 | 100 |
-| `/` escritorio | 100 | 100 | 100 | 100 |
-| `/privacidad` móvil | 100 | 100 | 100 | 100 |
-| `/404` móvil | 100 | 100 | 100 | 100 |
+| Página | Rendimiento | Accesibilidad | Buenas prácticas | SEO | LCP | FCP | CLS |
+|---|---|---|---|---|---|---|---|
+| `/` móvil | 98 | 100 | 100 | 100 | 2,3 s | 1,1 s | 0 |
+| `/` escritorio | 100 | 100 | 100 | 100 | 0,5 s | 0,3 s | 0 |
+| `/privacidad` móvil | 100 | 100 | 100 | 100 | 1,9 s | 0,6 s | 0 |
+| `/404` móvil | 99 | 100 | 100 | 100 | 2,0 s | 0,6 s | 0 |
 
-El LCP en móvil (2,7 s) es el logotipo del hero; lo que más lo retrasa es la hoja de Google Fonts, que bloquea el render (≈ 0,9 s). Siguiente mejora posible: servir las fuentes desde el propio sitio.
+Antes, con Google Fonts: 96 en móvil, LCP 2,7 s, FCP 1,2 s y ≈ 0,9 s de recursos bloqueantes. Ahora no queda ningún recurso bloqueante. El LCP sigue siendo el logotipo del hero; casi todo es «render delay» de la red lenta simulada mientras bajan las dos fuentes precargadas. Quitar la precarga de Bricolage lo empeoraba (FCP 1,8 s), así que se queda.
 
 **Inspector de design-taste-frontend:** de 15 fallos a 2, los dos de marca (violeta; sin fotos propias). `lint` sin fallos ni avisos.
 
 **Detector de impeccable:** queda un aviso, «ilustración hecha con formas», que es Borrón en línea: falso positivo, es la mascota oficial.
 
-**Arreglado en el repaso:** rebote elástico en las entradas de Borrón (ahora frena suave), palabras sueltas al final de párrafo (`text-wrap: pretty`), anillo de foco de la fila de capturas sin contraste sobre coral (ahora toma el color del texto de la franja), enlace del correo del pie por debajo de 44 px, `fetchpriority="high"` en el logotipo del hero, JetBrains Mono ya no se descarga y fuera los estilos que no usaba nadie (`.container`, `.section`, `.marker`, `.btn--coral`, `.link-arrow`, temas coral y blanco).
+**Arreglado en el repaso:** rebote elástico en las entradas de Borrón (ahora frena suave), palabras sueltas al final de párrafo (`text-wrap: pretty`), anillo de foco de la fila de capturas sin contraste sobre coral (ahora toma el color del texto de la franja), enlace del correo del pie por debajo de 44 px, `fetchpriority="high"` en el logotipo del hero (que además entra sin fundido, para no retrasar el LCP), fuentes servidas desde `public/fonts/`, CSS incrustado en el HTML, JetBrains Mono ya no se descarga y fuera los estilos que no usaba nadie (`.container`, `.section`, `.marker`, `.btn--coral`, `.link-arrow`, temas coral y blanco).
 
 **Comprobado a mano:** sin scroll horizontal a 360, 390, 768 y 1440 px; objetivos táctiles ≥ 44 px; un solo `h1` por página; menú móvil con teclado y Escape; la barra de contacto con flechas y lector de pantalla (`role="status"`); todo el movimiento dentro de `prefers-reduced-motion: no-preference`.
 
