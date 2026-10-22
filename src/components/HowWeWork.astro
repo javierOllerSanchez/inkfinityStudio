@@ -11,14 +11,14 @@ const icons = {
 
 <section class="section how" aria-labelledby="how-title">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head" data-reveal>
       <p class="eyebrow">{howWeWork.eyebrow}</p>
       <h2 id="how-title">{howWeWork.title}</h2>
     </div>
     <ul class="cards">
-      {howWeWork.rules.map((r) => (
-        <li class="card lift">
-          <svg class="icon" viewBox="0 0 32 32" aria-hidden="true" set:html={icons[r.icon]} />
+      {howWeWork.rules.map((r, i) => (
+        <li class="card tilt" data-reveal style={`--i:${i + 1}`}>
+          <svg class="icon pop" viewBox="0 0 32 32" aria-hidden="true" set:html={icons[r.icon]} />
           <h3>{r.title}</h3>
           <p>{r.text}</p>
         </li>

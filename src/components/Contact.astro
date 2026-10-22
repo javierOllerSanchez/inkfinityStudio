@@ -4,8 +4,8 @@ import { contact, site } from '../copy';
 
 <section id="contacto" class="section theme-coral" aria-labelledby="contact-title">
   <div class="container grid">
-    <img src="/assets/mascot/borron-toma-ya.svg" alt="" width="240" height="240" loading="lazy" />
-    <div class="copy">
+    <img data-reveal="pop" src="/assets/mascot/borron-toma-ya.svg" alt="" width="240" height="240" loading="lazy" />
+    <div class="copy" data-reveal style="--i:2">
       <h2 id="contact-title">{contact.title}</h2>
       <p>{contact.text}</p>
       <a class="btn btn--ink" href={`mailto:${site.email}`}>{contact.cta}</a>

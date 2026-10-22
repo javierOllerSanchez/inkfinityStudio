@@ -8,14 +8,14 @@ const entries = (await getCollection('apps')).sort((a, b) => a.data.order - b.da
 
 <section id="apps" class="section theme-white" aria-labelledby="apps-title">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head" data-reveal>
       <p class="eyebrow">{apps.eyebrow}</p>
       <h2 id="apps-title">{apps.title}</h2>
     </div>
     <ul class="grid">
-      {entries.map((e) => <AppCard app={e.data} />)}
-      <li class="next">
-        <img src="/assets/mascot/borron-mmm.svg" alt="" width="96" height="96" loading="lazy" />
+      {entries.map((e, i) => <AppCard app={e.data} index={i} />)}
+      <li class="next tilt" data-reveal style={`--i:${entries.length + 1}`}>
+        <img class="pop" src="/assets/mascot/borron-mmm.svg" alt="" width="96" height="96" loading="lazy" />
         <p>{apps.next}</p>
       </li>
     </ul>

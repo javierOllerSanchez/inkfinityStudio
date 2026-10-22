@@ -6,10 +6,10 @@ const { member, index } = Astro.props;
 const tones = ['coral', 'violet', 'lime', 'lavender'];
 ---
 
-<li class="card lift">
+<li class="card tilt" data-reveal style={`--i:${index + 1}`}>
   {member.avatar
-    ? <img class="avatar" src={member.avatar} alt={member.name} width="96" height="96" loading="lazy" />
-    : <span class={`avatar avatar--${tones[index % tones.length]}`}><span class="marker">{crew.avatarPlaceholder}</span></span>}
+    ? <img class="avatar pop" src={member.avatar} alt={member.name} width="96" height="96" loading="lazy" />
+    : <span class={`avatar pop avatar--${tones[index % tones.length]}`}><span class="marker">{crew.avatarPlaceholder}</span></span>}
   <h3>{member.name}</h3>
   <p>{member.role}</p>
   {member.link && <a href={member.link.href}>{member.link.label}<span class="visually-hidden"> de {member.name}</span></a>}

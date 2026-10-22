@@ -29,6 +29,9 @@ export const hero = {
   note: '¡recién hecha!',
 };
 
+// Cinta en movimiento bajo el hero (decorativa)
+export const marquee = ['Apps recién salidas del tintero', 'Ideas que no se acaban', 'Pequeñas', 'Útiles', 'Con gracia'];
+
 export const howWeWork = {
   eyebrow: 'Cómo trabajamos',
   title: 'Tres reglas y un pulpo',

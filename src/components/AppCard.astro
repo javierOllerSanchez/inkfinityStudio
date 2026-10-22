@@ -2,14 +2,14 @@
 import type { CollectionEntry } from 'astro:content';
 import { apps } from '../copy';
 
-interface Props { app: CollectionEntry<'apps'>['data'] }
-const { app } = Astro.props;
+interface Props { app: CollectionEntry<'apps'>['data']; index: number }
+const { app, index } = Astro.props;
 ---
 
-<li class="card lift">
+<li class="card tilt" data-reveal style={`--i:${index + 1}`}>
   {app.icon
-    ? <img class="icon" src={app.icon} alt="" width="64" height="64" loading="lazy" />
-    : <span class={`icon icon--${app.color}`} aria-hidden="true" />}
+    ? <img class="icon pop" src={app.icon} alt="" width="64" height="64" loading="lazy" />
+    : <span class={`icon pop icon--${app.color}`} aria-hidden="true" />}
   <div class="body">
     <span class={`pill pill--${app.status}`}>{apps.status[app.status]}</span>
     <h3>{app.name}</h3>
