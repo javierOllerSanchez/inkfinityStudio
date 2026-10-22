@@ -1,0 +1,50 @@
+---
+import { getCollection } from 'astro:content';
+import AppCard from './AppCard.astro';
+import { apps } from '../copy';
+
+const entries = (await getCollection('apps')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<section id="apps" class="section theme-white" aria-labelledby="apps-title">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">{apps.eyebrow}</p>
+      <h2 id="apps-title">{apps.title}</h2>
+    </div>
+    <ul class="grid">
+      {entries.map((e) => <AppCard app={e.data} />)}
+      <li class="next">
+        <img src="/assets/mascot/borron-mmm.svg" alt="" width="96" height="96" loading="lazy" />
+        <p>{apps.next}</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    gap: var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .next {
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: var(--space-3);
+    min-height: 240px;
+    padding: var(--space-6);
+    border: 2px dashed var(--violet-600);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    color: var(--text-muted);
+    font-weight: 700;
+  }
+  .next img { width: 96px; }
+
+  @media (min-width: 768px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+</style>

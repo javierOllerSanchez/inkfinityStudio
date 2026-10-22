@@ -1,0 +1,110 @@
+---
+import { nav } from '../copy';
+---
+
+<header class="site-header theme-ink">
+  <div class="container bar">
+    <a href="/" class="logo" aria-label={nav.home}>
+      <img src="/assets/logo/inkfinity-lockup-horizontal-on-dark.svg" alt="" width="140" height="33" />
+    </a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span class="menu-icon" aria-hidden="true"></span>
+      {nav.menu}
+    </button>
+    <nav id="site-nav" aria-label={nav.label}>
+      <ul>
+        {nav.links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('.menu-btn')!;
+  const navEl = document.getElementById('site-nav')!;
+  const set = (open: boolean) => {
+    btn.setAttribute('aria-expanded', String(open));
+    navEl.classList.toggle('open', open);
+  };
+  btn.addEventListener('click', () => set(btn.getAttribute('aria-expanded') !== 'true'));
+  navEl.addEventListener('click', (e) => (e.target as Element).closest('a') && set(false));
+  document.addEventListener('keydown', (e) => e.key === 'Escape' && set(false));
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--bg);
+    color: var(--text);
+    border-bottom: 1px solid var(--border);
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    min-height: 64px;
+  }
+  .logo { display: flex; align-items: center; min-height: 44px; }
+  .logo img { width: 140px; height: auto; }
+
+  ul { display: flex; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+  nav a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 var(--space-3);
+    color: var(--text);
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: var(--radius-pill);
+  }
+  nav a:hover { color: var(--lime-400); }
+
+  .menu-btn { display: none; }
+
+  /* Móvil con JS: el menú se pliega tras un botón. Sin JS, los enlaces siguen visibles. */
+  @media (max-width: 767px) {
+    :global(.js) .menu-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      min-height: 44px;
+      padding: 0 var(--space-4);
+      background: transparent;
+      color: var(--text);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-pill);
+      font: 700 var(--fs-small) var(--font-body);
+      cursor: pointer;
+    }
+    .menu-icon, .menu-icon::before, .menu-icon::after {
+      display: block;
+      width: 16px;
+      height: 2px;
+      background: currentColor;
+      border-radius: 2px;
+    }
+    .menu-icon { position: relative; }
+    .menu-icon::before, .menu-icon::after { content: ""; position: absolute; left: 0; }
+    .menu-icon::before { top: -5px; }
+    .menu-icon::after { top: 5px; }
+
+    :global(.js) nav {
+      display: none;
+      position: absolute;
+      inset: 100% 0 auto;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: var(--space-2) var(--gutter) var(--space-4);
+    }
+    :global(.js) nav.open { display: block; }
+    :global(.js) ul { flex-direction: column; }
+
+    /* Sin JS, logo algo más pequeño para que quepan los tres enlaces */
+    .logo img { width: 120px; }
+    nav a { padding: 0 var(--space-2); }
+  }
+</style>

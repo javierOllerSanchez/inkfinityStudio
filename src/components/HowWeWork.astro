@@ -1,0 +1,52 @@
+---
+import { howWeWork } from '../copy';
+
+// Iconos sencillos hechos con las piezas del logo: gota, tentáculo y rizo.
+const icons = {
+  drop: '<path d="M12 2 C16.8 7.7 22 13.4 22 18 A10 10 0 0 1 2 18 C2 13.4 7.2 7.7 12 2 Z" fill="currentColor"/>',
+  tentacle: '<path d="M4 28 C10 26 14 18 16 12 C18 6 24 4 27 8 C29 11 26 15 23 13" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>',
+  curl: '<path d="M16 16 C16 12 22 12 22 17 C22 23 13 24 10 18 C6 11 13 4 20 6 C26 8 29 14 28 20" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>',
+};
+---
+
+<section class="section how" aria-labelledby="how-title">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">{howWeWork.eyebrow}</p>
+      <h2 id="how-title">{howWeWork.title}</h2>
+    </div>
+    <ul class="cards">
+      {howWeWork.rules.map((r) => (
+        <li class="card lift">
+          <svg class="icon" viewBox="0 0 32 32" aria-hidden="true" set:html={icons[r.icon]} />
+          <h3>{r.title}</h3>
+          <p>{r.text}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .cards {
+    display: grid;
+    gap: var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .card {
+    display: grid;
+    gap: var(--space-3);
+    align-content: start;
+    padding: var(--space-6);
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+  }
+  .icon { width: 40px; height: 40px; color: var(--coral-500); margin-bottom: var(--space-2); }
+  .card p { color: var(--text-muted); }
+
+  @media (min-width: 768px) {
+    .cards { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>

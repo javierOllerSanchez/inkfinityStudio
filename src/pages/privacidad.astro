@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { privacy, site } from '../copy';
+---
+
+<BaseLayout title={privacy.title} description={privacy.description}>
+  <article class="section">
+    <div class="container prose">
+      <h1>{privacy.title}</h1>
+      <p class="updated">{privacy.updated}</p>
+      <p class="marker">{privacy.body}</p>
+      <p>{privacy.contact} <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .prose { display: grid; gap: var(--space-5); max-width: calc(44rem + 2 * var(--gutter)); }
+  h1 { font-size: var(--fs-h1); }
+  .updated { color: var(--text-muted); font-family: var(--font-mono); font-size: var(--fs-small); }
+</style>

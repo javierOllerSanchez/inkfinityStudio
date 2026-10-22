@@ -1,0 +1,34 @@
+---
+import { contact, site } from '../copy';
+---
+
+<section id="contacto" class="section theme-coral" aria-labelledby="contact-title">
+  <div class="container grid">
+    <img src="/assets/mascot/borron-toma-ya.svg" alt="" width="240" height="240" loading="lazy" />
+    <div class="copy">
+      <h2 id="contact-title">{contact.title}</h2>
+      <p>{contact.text}</p>
+      <a class="btn btn--ink" href={`mailto:${site.email}`}>{contact.cta}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid { display: grid; gap: var(--space-6); align-items: center; }
+  /* Borrón es coral: sin el círculo de tinta se perdería sobre el fondo coral */
+  img {
+    width: min(200px, 60%);
+    justify-self: center;
+    padding: 8%;
+    background: var(--ink-900);
+    border-radius: 50%;
+  }
+  .copy { display: grid; gap: var(--space-4); justify-items: start; max-width: 36rem; }
+  .copy p { font-size: var(--fs-body-lg); }
+  .copy .btn { margin-top: var(--space-2); }
+
+  @media (min-width: 768px) {
+    .grid { grid-template-columns: auto 1fr; gap: var(--space-8); }
+    img { width: 240px; }
+  }
+</style>

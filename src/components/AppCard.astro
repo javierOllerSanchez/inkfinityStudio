@@ -1,0 +1,61 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { apps } from '../copy';
+
+interface Props { app: CollectionEntry<'apps'>['data'] }
+const { app } = Astro.props;
+---
+
+<li class="card lift">
+  {app.icon
+    ? <img class="icon" src={app.icon} alt="" width="64" height="64" loading="lazy" />
+    : <span class={`icon icon--${app.color}`} aria-hidden="true" />}
+  <div class="body">
+    <span class={`pill pill--${app.status}`}>{apps.status[app.status]}</span>
+    <h3>{app.name}</h3>
+    <p>{app.description}</p>
+  </div>
+  {app.status === 'disponible' && app.playUrl && (
+    <a class="badge" href={app.playUrl}>
+      <img src="/assets/badges/google-play-es.png" alt={apps.badgeLabel} width="180" height="70" loading="lazy" />
+      <span class="visually-hidden">: {app.name}</span>
+    </a>
+  )}
+</li>
+
+<style>
+  .card {
+    display: grid;
+    gap: var(--space-4);
+    align-content: start;
+    padding: var(--space-6);
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+  .icon { width: 64px; height: 64px; border-radius: var(--radius-md); }
+  .icon--coral { background: var(--coral-500); }
+  .icon--violet { background: var(--violet-600); }
+  .icon--lime { background: var(--lime-400); }
+  .icon--ink { background: var(--ink-900); }
+
+  .body { display: grid; gap: var(--space-2); justify-items: start; }
+  h3 { overflow-wrap: anywhere; }
+  .body p { color: var(--text-muted); }
+
+  .pill {
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-pill);
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: var(--fs-label);
+    letter-spacing: 0.06em;
+  }
+  .pill--disponible { background: var(--lime-400); color: var(--accent-ink); }
+  .pill--pronto { background: var(--violet-600); color: var(--white); }
+  .pill--tintero { background: var(--lavender-50); color: var(--accent-ink); }
+
+  /* Insignia oficial de Google Play, sin modificar */
+  .badge { justify-self: start; }
+  .badge img { width: 180px; height: auto; }
+</style>

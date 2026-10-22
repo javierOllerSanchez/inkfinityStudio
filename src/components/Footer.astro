@@ -1,0 +1,42 @@
+---
+import { footer, site } from '../copy';
+---
+
+<footer class="site-footer theme-ink">
+  <div class="container inner">
+    <div class="brand">
+      <img src="/assets/logo/inkfinity-lockup-horizontal-on-dark.svg" alt="Inkfinity" width="160" height="38" loading="lazy" />
+      <p>{footer.slogan}</p>
+    </div>
+    <nav aria-label={footer.label}>
+      <ul>
+        <li><a href={site.playDeveloperUrl}>{footer.links.play}</a></li>
+        <li><a href="/privacidad">{footer.links.privacy}</a></li>
+        <li><a href="/#contacto">{footer.links.contact}</a></li>
+      </ul>
+    </nav>
+    <p class="copy">{footer.copyright}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--bg);
+    color: var(--text);
+    padding-block: var(--space-7);
+    border-top: 1px solid var(--border);
+  }
+  .inner { display: grid; gap: var(--space-5); }
+  .brand { display: grid; gap: var(--space-3); }
+  .brand img { width: 160px; }
+  .brand p, .copy { color: var(--text-muted); }
+  .copy { font-size: var(--fs-small); }
+  ul { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); margin: 0; padding: 0; list-style: none; }
+  a { display: inline-flex; align-items: center; min-height: 44px; color: var(--text); font-weight: 700; }
+  a:hover { color: var(--lime-400); }
+
+  @media (min-width: 768px) {
+    .inner { grid-template-columns: 1fr auto; align-items: center; }
+    .copy { grid-column: 1 / -1; }
+  }
+</style>

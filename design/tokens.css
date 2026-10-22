@@ -1,0 +1,95 @@
+/* Inkfinity Studio · design tokens
+   Fuente de verdad para colores, tipografía, espaciado y radios.
+   Importa este archivo una vez en el layout global. */
+
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=Caveat:wght@700&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap");
+
+:root {
+  /* ---- Paleta de marca ---- */
+  --ink-900: #15123A;      /* Tinta abisal: fondo oscuro y texto principal */
+  --ink-950: #0D0B26;      /* Tinta aún más profunda: sombras, bordes de dispositivos */
+  --ink-800: #1F1A52;      /* Halo sobre fondo tinta */
+  --coral-500: #FF5A4E;    /* Coral pulpo: acento principal, Borrón, CTA */
+  --coral-600: #E0453A;    /* Sombra de Borrón, hover de coral */
+  --violet-600: #5B4BE0;   /* Violeta tinta: acento secundario, enlaces */
+  --violet-400: #7B6CF6;   /* Violeta claro: detalles sobre oscuro */
+  --violet-300: #9A8FFF;   /* Gota violeta sobre fondo oscuro */
+  --lime-400: #D4FF3D;     /* Lima eléctrica: solo chispazos (≈5 % de la superficie) */
+  --lavender-50: #F3EFFF;  /* Lavanda espuma: fondo claro principal */
+  --paper-100: #F2EEE6;    /* Papel riso: piezas con textura de impresión */
+  --mist-200: #C9C6E0;     /* Texto secundario sobre tinta */
+  --tide-600: #4A4766;     /* Gris marea: texto secundario sobre claro */
+  --line-200: #E4E2EE;     /* Separadores sobre claro */
+  --white: #FFFFFF;
+
+  /* ---- Roles semánticos (tema claro por defecto) ---- */
+  --bg: var(--lavender-50);
+  --surface: var(--white);
+  --text: var(--ink-900);
+  --text-muted: var(--tide-600);
+  --accent: var(--coral-500);
+  --accent-ink: var(--ink-900);     /* texto encima de coral o lima: siempre tinta, nunca blanco */
+  --link: var(--violet-600);
+  --border: var(--line-200);
+
+  /* ---- Tipografía ---- */
+  --font-display: "Bricolage Grotesque", system-ui, sans-serif; /* usar con font-stretch: 75% y peso 800 */
+  --font-body: "DM Sans", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-hand: "Caveat", cursive; /* notas a mano, con moderación */
+
+  --display-stretch: 75%;
+  --display-weight: 800;
+  --display-tracking: -0.02em;
+
+  --fs-hero: clamp(3rem, 7vw + 1rem, 7.5rem);
+  --fs-h1: clamp(2.5rem, 4vw + 1rem, 4.75rem);
+  --fs-h2: clamp(2rem, 2.5vw + 1rem, 3rem);
+  --fs-h3: 1.625rem;
+  --fs-body-lg: 1.25rem;
+  --fs-body: 1.0625rem;
+  --fs-small: 0.9375rem;
+  --fs-label: 0.8125rem;   /* etiquetas mono en mayúsculas, tracking 0.12em */
+
+  /* ---- Espaciado (base 4 px) ---- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 128px;
+
+  /* ---- Radios ---- */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 40px;
+  --radius-pill: 999px;
+
+  /* ---- Layout ---- */
+  --container: 1200px;
+  --gutter: 16px; /* mínimo en móvil */
+
+  /* ---- Movimiento ---- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+}
+
+/* Sección o página sobre fondo tinta */
+.theme-ink {
+  --bg: var(--ink-900);
+  --surface: var(--ink-800);
+  --text: var(--white);
+  --text-muted: var(--mist-200);
+  --link: var(--lime-400);
+  --border: #2E2966;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --dur-fast: 0ms; --dur-base: 0ms; }
+}

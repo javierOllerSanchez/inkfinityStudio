@@ -1,0 +1,86 @@
+---
+import { hero } from '../copy';
+import borronRaw from '../../public/assets/mascot/borron-chulo-saludando.svg?raw';
+
+// SVG en línea para poder balancear el tentáculo levantado sin tocar el dibujo.
+const borron = borronRaw.replace('<path d="M160 138', '<path class="wave" d="M160 138');
+const drop = 'M5 0 C7 3.2 10 6.4 10 9 A5 5 0 0 1 0 9 C0 6.4 3 3.2 5 0 Z';
+---
+
+<section class="hero section theme-ink" aria-labelledby="hero-title">
+  <div class="container grid">
+    <div class="copy">
+      <h1 id="hero-title">{hero.title}</h1>
+      <p class="lead">{hero.lead}</p>
+      <div class="actions">
+        <a class="btn btn--coral" href="#apps">{hero.cta}</a>
+        <a class="link-arrow" href="#crew">{hero.secondary} <span aria-hidden="true">&nbsp;→</span></a>
+      </div>
+    </div>
+
+    <div class="art">
+      <svg class="halo" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="50" /></svg>
+      <svg class="drop drop--lime" viewBox="0 0 10 14" aria-hidden="true"><path d={drop} /></svg>
+      <svg class="drop drop--violet" viewBox="0 0 10 14" aria-hidden="true"><path d={drop} /></svg>
+      <svg class="drop drop--lime-sm" viewBox="0 0 10 14" aria-hidden="true"><path d={drop} /></svg>
+      <div class="borron" set:html={borron} />
+      <p class="note" aria-hidden="true">{hero.note}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero { padding-top: var(--space-7); overflow: hidden; }
+  .grid { display: grid; gap: var(--space-7); align-items: center; }
+
+  h1 { font-size: var(--fs-hero); line-height: 0.95; max-width: 11ch; }
+  .lead { margin-top: var(--space-5); color: var(--text-muted); font-size: var(--fs-body-lg); max-width: 34rem; }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4) var(--space-5);
+    margin-top: var(--space-6);
+  }
+
+  .art {
+    position: relative;
+    width: min(100%, 420px);
+    margin-inline: auto;
+    aspect-ratio: 1;
+  }
+  .halo { position: absolute; inset: 6%; width: 88%; fill: var(--ink-800); }
+  .borron { position: relative; }
+  .borron :global(svg) { width: 100%; height: auto; }
+
+  .drop { position: absolute; }
+  .drop--lime { width: 7%; bottom: 20%; left: 2%; fill: var(--lime-400); transform: rotate(-14deg); }
+  .drop--violet { width: 5%; bottom: 14%; right: 4%; fill: var(--violet-300); transform: rotate(12deg); }
+  .drop--lime-sm { width: 3.5%; top: 4%; right: 22%; fill: var(--lime-400); }
+
+  .note {
+    position: absolute;
+    top: 2%;
+    left: 0;
+    font-family: var(--font-hand);
+    font-weight: 700;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    color: var(--lime-400);
+    transform: rotate(-6deg);
+  }
+
+  .borron :global(.wave) { transform-box: view-box; transform-origin: 160px 138px; }
+  @media (prefers-reduced-motion: no-preference) {
+    .borron :global(.wave) { animation: wave 2.4s ease-in-out infinite alternate; }
+  }
+  @keyframes wave {
+    from { transform: rotate(-6deg); }
+    to { transform: rotate(8deg); }
+  }
+
+  @media (min-width: 900px) {
+    .hero { padding-top: var(--space-8); }
+    .grid { grid-template-columns: 1.15fr 1fr; }
+    .art { width: 100%; max-width: 480px; }
+  }
+</style>

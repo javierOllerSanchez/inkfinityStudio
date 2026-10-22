@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { notFound } from '../copy';
+---
+
+<BaseLayout title={notFound.title} description={notFound.text}>
+  <section class="section theme-ink ko">
+    <div class="container inner">
+      <img src="/assets/mascot/borron-ko.svg" alt="Borrón, la mascota, fuera de combate" width="240" height="240" />
+      <h1>{notFound.title}</h1>
+      <p>{notFound.text}</p>
+      <a class="btn btn--coral" href="/">{notFound.cta}</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .ko { min-height: 70vh; }
+  .inner { display: grid; justify-items: center; gap: var(--space-5); text-align: center; }
+  img { width: min(240px, 60%); }
+  h1 { font-size: var(--fs-h1); max-width: 14ch; }
+  p { color: var(--text-muted); font-size: var(--fs-body-lg); }
+</style>

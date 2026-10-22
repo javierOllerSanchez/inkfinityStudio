@@ -1,0 +1,50 @@
+---
+import { crew } from '../copy';
+
+interface Props { member: (typeof crew.members)[number]; index: number }
+const { member, index } = Astro.props;
+const tones = ['coral', 'violet', 'lime', 'lavender'];
+---
+
+<li class="card lift">
+  {member.avatar
+    ? <img class="avatar" src={member.avatar} alt={member.name} width="96" height="96" loading="lazy" />
+    : <span class={`avatar avatar--${tones[index % tones.length]}`}><span class="marker">{crew.avatarPlaceholder}</span></span>}
+  <h3>{member.name}</h3>
+  <p>{member.role}</p>
+  {member.link && <a href={member.link.href}>{member.link.label}<span class="visually-hidden"> de {member.name}</span></a>}
+</li>
+
+<style>
+  .card {
+    display: grid;
+    gap: var(--space-2);
+    justify-items: start;
+    align-content: start;
+    padding: var(--space-5);
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    min-width: 0;
+  }
+  .avatar {
+    display: grid;
+    place-items: center;
+    width: 96px;
+    height: 96px;
+    margin-bottom: var(--space-2);
+    border-radius: 50%;
+    object-fit: cover;
+    text-align: center;
+    color: var(--accent-ink);
+    font-size: 0.6875rem;
+    line-height: 1.2;
+    padding: var(--space-2);
+  }
+  .avatar--coral { background: var(--coral-500); }
+  .avatar--violet { background: var(--violet-300); }
+  .avatar--lime { background: var(--lime-400); }
+  .avatar--lavender { background: var(--lavender-50); }
+  h3 { font-size: 1.375rem; overflow-wrap: anywhere; }
+  p { color: var(--text-muted); font-size: var(--fs-small); overflow-wrap: anywhere; }
+  a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 700; }
+</style>
