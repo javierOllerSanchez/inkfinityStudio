@@ -1,12 +1,14 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { notFound } from '../copy';
+import AsciiReveal from '../components/AsciiReveal.astro';
 ---
 
 <BaseLayout title={notFound.title} description={notFound.text}>
   <!-- Tablero: Borrón KO sobre tinta · el mensaje en coral -->
   <section class="board ko" aria-labelledby="ko-title">
     <div class="tile mascot">
+      <AsciiReveal design="tinta" />
       <img src="/assets/mascot/borron-ko.svg" alt="Borrón, la mascota, fuera de combate" width="480" height="480" />
     </div>
     <div class="tile message">

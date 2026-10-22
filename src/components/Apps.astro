@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import AppStrip from './AppStrip.astro';
+import AsciiReveal from './AsciiReveal.astro';
 import { apps, site } from '../copy';
 
 const entries = (await getCollection('apps')).sort((a, b) => a.data.order - b.data.order);
@@ -22,6 +23,7 @@ const entries = (await getCollection('apps')).sort((a, b) => a.data.order - b.da
   <ul class="strips">
     {entries.map((e, i) => <AppStrip app={e.data} index={i} />)}
     <li class="tile next" data-reveal style={`--i:${entries.length + 1}`}>
+      <AsciiReveal design="tinta" />
       <img src="/assets/mascot/borron-mmm.svg" alt="" width="480" height="480" loading="lazy" />
       <p>{apps.next}</p>
     </li>

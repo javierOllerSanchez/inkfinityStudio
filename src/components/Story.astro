@@ -1,10 +1,12 @@
 ---
 import { story } from '../copy';
+import AsciiReveal from './AsciiReveal.astro';
 ---
 
 <!-- Borrón riso sobre papel · la historia sobre tinta · los hitos en una fila -->
 <section id="historia" class="board story" aria-labelledby="story-title">
   <div class="tile mascot" data-reveal="pop">
+    <AsciiReveal tone="light" design="remolino" />
     <img src="/assets/mascot/borron-riso.svg" alt="" width="480" height="480" loading="lazy" />
   </div>
 

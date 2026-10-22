@@ -1,0 +1,203 @@
+---
+// Dibujo ASCII que se desvela bajo el cursor en las baldosas de Borrón. Decorativo: aria-hidden y sin foco.
+// Va como primer hijo de la baldosa; se pinta detrás de todo su contenido y por encima de su fondo.
+// El dibujo se genera en un <canvas> al tamaño exacto de la baldosa, así que la cubre entera sea cual sea.
+interface Props {
+  tone?: 'ink' | 'light';
+  design: 'infinito' | 'gotas' | 'tinta' | 'remolino' | 'ondas';
+}
+const { tone = 'ink', design } = Astro.props;
+---
+
+<div class={`ascii-reveal ascii-reveal--${tone}`} data-design={design} aria-hidden="true">
+  <canvas></canvas>
+</div>
+
+<script>
+  // De menos a más tinta
+  const RAMP = ' .:-=+*#%@';
+  const TAU = Math.PI * 2;
+  const clamp = (v: number) => Math.min(1, Math.max(0, v));
+
+  // Cada diseño es un campo de densidad: f(u, v, t) → 0..1, con u y v en anchos de carácter
+  type Field = (u: number, v: number, t: number, w: number, h: number) => number;
+  const fields: Record<string, Field> = {
+    // Infinitos como el del logotipo, inclinados −7° y con la tinta corriendo por el trazo
+    infinito(u, v, t) {
+      const size = 34;
+      const cu = ((u + t * 3) % size + size) % size, cv = ((v + (Math.floor((u + t * 3) / size) % 2) * size / 2) % size + size) % size;
+      let x = (cu / size) * 2.4 - 1.2, y = (cv / size) * 2.4 - 1.2;
+      const c = Math.cos(-0.12), s = Math.sin(-0.12);
+      [x, y] = [x * c - y * s, x * s + y * c];
+      const F = (x * x + y * y) ** 2 - (x * x - y * y);
+      const line = Math.exp(-F * F * 9);
+      return line * (0.55 + 0.45 * Math.sin(Math.atan2(y, x) * 2 - t * 3));
+    },
+    // Gotas de tinta en ladrillo, cayendo despacio
+    gotas(u, v, t) {
+      const cw = 16, ch = 18;
+      const vv = v - t * 4;
+      const row = Math.floor(vv / ch);
+      const uu = u + (row % 2 ? cw / 2 : 0);
+      const x = ((uu % cw) + cw) % cw / cw * 2 - 1;
+      const y = ((vv % ch) + ch) % ch / ch * 2 - 1;
+      const round = Math.hypot(x, y - 0.3) - 0.5;
+      const w = 0.5 * clamp((y + 0.85) / 1.15);
+      const tip = y < 0.3 ? Math.max(Math.abs(x) - w, -0.85 - y) : 1;
+      const d = Math.min(round, tip);
+      const shine = Math.hypot(x + 0.18, y - 0.18) < 0.12 ? -0.6 : 0;
+      return clamp(1 - (d + 0.12) * 4) + shine;
+    },
+    // Tinta corrida: ondas que se doblan unas sobre otras
+    tinta(u, v, t) {
+      const a = Math.sin(u * 0.09 + 2.2 * Math.sin(v * 0.045 + t * 0.6) + t * 0.8);
+      const b = Math.cos(v * 0.06 - u * 0.02 - t * 0.4);
+      return clamp(0.5 + 0.5 * a * b);
+    },
+    // Rizos como los de los tentáculos de Borrón
+    remolino(u, v, t) {
+      const size = 40;
+      const cu = ((u % size) + size) % size - size / 2, cv = ((v % size) + size) % size - size / 2;
+      const r = Math.hypot(cu, cv) / (size / 2);
+      const a = Math.atan2(cv, cu);
+      const spin = (Math.floor(u / size) + Math.floor(v / size)) % 2 ? 1 : -1;
+      return clamp((0.5 + 0.5 * Math.sin(spin * a + r * 13 - t * 2)) * clamp(1.25 - r));
+    },
+    // Ondas desde el centro, como una gota que cae en el tintero
+    ondas(u, v, t, w, h) {
+      const r = Math.hypot(u - w / 2, v - h / 2);
+      return clamp((0.5 + 0.5 * Math.sin(r * 0.32 - t * 2.5)) * Math.exp(-r * 0.008));
+    },
+  };
+
+  const fine = matchMedia('(hover: hover) and (pointer: fine)');
+  const still = matchMedia('(prefers-reduced-motion: reduce)');
+
+  document.querySelectorAll<HTMLElement>('.ascii-reveal').forEach((layer) => {
+    const tile = layer.parentElement!;
+    const canvas = layer.querySelector('canvas')!;
+    const ctx = canvas.getContext('2d')!;
+    const field = fields[layer.dataset.design!];
+    let cols = 0, rows = 0, cw = 0, lh = 0, colors: string[] = [];
+    let hovering = false, until = 0, last = 0, loop = 0;
+
+    // Ajusta el lienzo al tamaño actual de la baldosa (y a la densidad de píxeles)
+    const fit = () => {
+      const w = tile.clientWidth, h = tile.clientHeight, dpr = Math.min(devicePixelRatio, 2);
+      if (canvas.width === Math.round(w * dpr) && canvas.height === Math.round(h * dpr)) return;
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+      canvas.style.width = `${w}px`;
+      canvas.style.height = `${h}px`;
+      const css = getComputedStyle(layer);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.font = `700 13px ${css.getPropertyValue('--font-mono')}`; // taste-skill-ignore: el ASCII necesita ancho fijo para cuadrar en rejilla
+      ctx.textBaseline = 'top';
+      cw = ctx.measureText('M').width;
+      lh = 15;
+      cols = Math.ceil(w / cw);
+      rows = Math.ceil(h / lh);
+      colors = ['--ascii', '--ascii-mid', '--ascii-hi'].map((p) => css.getPropertyValue(p).trim());
+    };
+
+    const draw = (t: number) => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const k = lh / cw; // una fila mide k anchos de carácter: así los dibujos no salen estirados
+      let current = '';
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          // Trama de fondo en toda la baldosa: ningún hueco queda vacío; el motivo va encima
+          const grain = 0.16 + 0.12 * (0.5 + 0.5 * Math.sin(c * 0.35 + r * k * 0.22 + t * 0.7));
+          const f = Math.max(field(c, r * k, t, cols, rows * k), grain);
+          const color = colors[f < 0.45 ? 0 : f < 0.8 ? 1 : 2];
+          if (color !== current) ctx.fillStyle = current = color;
+          ctx.fillText(RAMP[Math.min(RAMP.length - 1, Math.floor(f * RAMP.length))], c * cw, r * lh);
+        }
+      }
+    };
+
+    // Se anima solo mientras la lente está abierta, a unos 20 fps
+    const tick = (now: number) => {
+      if (now - last > 50) {
+        draw(now / 1000);
+        last = now;
+      }
+      loop = hovering || now < until ? requestAnimationFrame(tick) : 0;
+    };
+
+    // La lente sigue al puntero con algo de inercia: decorativo, así que se nota vivo sin ir pegado al ratón
+    let x = 0, y = 0, tx = 0, ty = 0, frame = 0;
+    let fresh = true; // recién entrado: la lente salta bajo el cursor en vez de deslizarse desde la salida anterior
+    const follow = () => {
+      x += (tx - x) * 0.2;
+      y += (ty - y) * 0.2;
+      layer.style.setProperty('--x', `${x}px`);
+      layer.style.setProperty('--y', `${y}px`);
+      frame = Math.abs(tx - x) + Math.abs(ty - y) > 0.5 ? requestAnimationFrame(follow) : 0;
+    };
+
+    tile.addEventListener('pointerenter', () => {
+      if (!fine.matches) return;
+      hovering = true;
+      fit();
+      if (still.matches) draw(0);
+      else if (!loop) loop = requestAnimationFrame(tick);
+    });
+    tile.addEventListener('pointermove', (e) => {
+      if (!fine.matches) return;
+      const r = tile.getBoundingClientRect();
+      tx = e.clientX - r.left;
+      ty = e.clientY - r.top;
+      if (fresh || still.matches) {
+        x = tx;
+        y = ty;
+        fresh = false;
+      }
+      if (!frame) frame = requestAnimationFrame(follow);
+    });
+    // Al salir la lente se cierra donde estaba (lo hace el CSS) y el dibujo sigue vivo hasta que se cierra
+    tile.addEventListener('pointerleave', () => {
+      hovering = false;
+      fresh = true;
+      until = performance.now() + 400;
+    });
+  });
+</script>
+
+<style>
+  /* Radio animable: la lente se abre al entrar y se cierra al salir */
+  @property --r {
+    syntax: '<length>';
+    inherits: false;
+    initial-value: 0px;
+  }
+
+  /* La baldosa aísla su apilado para que la capa quede entre su fondo y su contenido */
+  :global(.tile:has(> .ascii-reveal)) { isolation: isolate; }
+
+  .ascii-reveal {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+    /* Posición de partida aquí y no como valor de reserva en var() */
+    --r: 0px;
+    --x: 50%;
+    --y: 50%;
+    /* Círculo de borde nítido, como el resto de la marca: la máscara recorta, no se ve como degradado */
+    mask-image: radial-gradient(circle var(--r) at var(--x) var(--y), black 97%, transparent 100%); /* taste-skill-ignore: máscara de recorte, no un relleno visible */
+  }
+  canvas { display: block; }
+
+  /* Tres tintas según la densidad del dibujo; la lima solo en lo más denso */
+  .ascii-reveal--ink { --ascii: var(--violet-400); --ascii-mid: var(--coral-500); --ascii-hi: var(--lime-400); }
+  .ascii-reveal--light { --ascii: var(--violet-300); --ascii-mid: var(--violet-600); --ascii-hi: var(--coral-500); }
+
+  @media (hover: hover) and (pointer: fine) {
+    :global(.tile:hover) > .ascii-reveal { --r: 170px; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .ascii-reveal { transition: --r 320ms var(--ease-out); }
+  }
+</style>

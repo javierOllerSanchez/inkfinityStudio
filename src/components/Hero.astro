@@ -1,5 +1,6 @@
 ---
 import { hero, site } from '../copy';
+import AsciiReveal from './AsciiReveal.astro';
 import borronRaw from '../../public/assets/mascot/borron-chulo-saludando.svg?raw';
 
 // SVG en línea para poder balancear el tentáculo levantado sin tocar el dibujo.
@@ -13,6 +14,7 @@ const borron = borronRaw.replace('<path d="M160 138', '<path class="wave" d="M16
   </div>
 
   <div class="tile mascot">
+    <AsciiReveal design="infinito" />
     <div class="borron" set:html={borron} />
     <p class="note" aria-hidden="true">{hero.note}</p>
   </div>

@@ -1,5 +1,6 @@
 ---
 import { contact, site } from '../copy';
+import AsciiReveal from './AsciiReveal.astro';
 
 // Expresión de Borrón para cada estado de la barra (ver tabla de docs/BRAND.md)
 const faces = {
@@ -40,6 +41,7 @@ const faces = {
   </div>
 
   <div class="tile mascot" data-mood="idle" aria-hidden="true">
+    <AsciiReveal design="ondas" />
     {Object.entries(faces).map(([mood, file]) => (
       <img data-show={mood} src={`/assets/mascot/${file}.svg`} alt="" width="480" height="480" loading="lazy" />
     ))}

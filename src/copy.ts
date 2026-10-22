@@ -69,12 +69,24 @@ export const crew = {
   lead: 'Cada uno lleva un brazo distinto del estudio.',
   // Número de miembros: [N]. La rejilla aguanta de 2 a 8.
   members: [
-    { name: '[NOMBRE]', role: '[ROL, p. ej. «Tentáculo de diseño»]', avatar: '', link: { label: 'GitHub', href: '[ENLACE A GITHUB]' } },
-    { name: '[NOMBRE]', role: '[ROL]', avatar: '', link: { label: 'LinkedIn', href: '[ENLACE A LINKEDIN]' } },
+    {
+      name: 'Javier Oller Sánchez',
+      role: 'Lead developer',
+      avatar: '/assets/crew/javier-oller.svg',
+      links: [
+        { network: 'github', href: 'https://github.com/javierOllerSanchez' },
+        { network: 'linkedin', href: 'https://www.linkedin.com/in/javier-oller-s%C3%A1nchez-180825391/' },
+      ],
+    },
     { name: '[NOMBRE]', role: '[ROL]', avatar: '' },
     { name: '[NOMBRE]', role: '[ROL]', avatar: '' },
-  ] as { name: string; role: string; avatar: string; link?: { label: string; href: string } }[],
+    { name: '[NOMBRE]', role: '[ROL]', avatar: '' },
+  ] as { name: string; role: string; avatar: string; links?: { network: 'github' | 'linkedin'; href: string }[] }[],
   avatarPlaceholder: '[FOTO O ILUSTRACIÓN]',
+  portraitAlt: 'Retrato de',
+  // Nombre de cada red para la etiqueta accesible del icono: «GitHub de Javier…»
+  networks: { github: 'GitHub', linkedin: 'LinkedIn' },
+  of: 'de',
 };
 
 export const contact = {

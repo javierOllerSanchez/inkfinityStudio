@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500" role="img" aria-label="Javier Oller Sánchez, ilustración">
+  <title>Javier Oller Sánchez</title>
+  <!-- «Dos tintas»: solo tinta y papel riso de la marca y una onda recortada en coral.
+       Se queda con lo que lo hace reconocible: pelo ondulado con flequillo, cejas, bigote fino, perilla
+       y el pendiente. Fondo transparente: lo pone la baldosa. -->
+
+  <!-- Hombros en tinta -->
+  <path d="M70 500 C78 432 128 404 200 404 C272 404 322 432 330 500 Z" fill="#15123A"/>
+
+  <!-- Su oreja izquierda (a la derecha del dibujo), asomando bajo el pelo -->
+  <ellipse cx="288" cy="274" rx="11" ry="18" fill="#F2EEE6"/>
+
+  <!-- Cuello y cara en papel -->
+  <rect x="178" y="350" width="44" height="60" fill="#F2EEE6"/>
+  <path d="M118 240 C118 178 156 146 200 146 C244 146 282 178 282 240 C282 312 246 360 200 362 C154 360 118 312 118 240 Z" fill="#F2EEE6"/>
+
+  <!-- Pelo con volumen y una onda recortada -->
+  <path d="M108 246 C92 186 112 112 176 94 C228 80 290 104 302 160 C308 190 302 220 290 248 L276 220 C268 202 254 190 238 184 C210 198 178 200 156 218 C140 230 128 244 122 262 Z" fill="#15123A"/>
+  <path d="M150 142 C176 122 206 122 226 134 C244 144 262 142 276 130" fill="none" stroke="#FF5A4E" stroke-width="8" stroke-linecap="round"/>
+
+  <!-- Flequillo: sale de la masa del pelo (sin hueco de papel) y barre la frente hasta quedarse sobre la ceja -->
+  <path d="M300 160 C240 166 196 180 164 204 C156 216 152 232 152 252 C162 243 173 239 185 237 C180 244 180 251 184 258 C192 245 206 234 226 226 C246 218 268 214 292 222 Z" fill="#15123A"/>
+
+  <!-- Cejas pobladas -->
+  <path d="M150 254 C162 244 182 244 194 250 L193 259 C180 255 164 255 152 262 Z" fill="#15123A"/>
+  <path d="M206 250 C218 244 238 244 250 254 L248 262 C236 255 220 255 207 259 Z" fill="#15123A"/>
+
+  <!-- Ojos de media luna: párpado relajado -->
+  <path d="M160 274 L190 274 C190 284 184 290 175 290 C166 290 160 284 160 274 Z" fill="#15123A"/>
+  <path d="M210 274 L240 274 C240 284 234 290 225 290 C216 290 210 284 210 274 Z" fill="#15123A"/>
+
+  <!-- Bigote fino y perilla -->
+  <path d="M176 320 C188 310 212 310 224 320 C212 316 188 316 176 320 Z" fill="#15123A"/>
+  <path d="M182 336 C188 330 212 330 218 336 C219 354 210 366 200 368 C190 366 181 354 182 336 Z" fill="#15123A"/>
+
+  <!-- Pendiente: un aro pequeño en tinta -->
+  <circle cx="291" cy="298" r="7" fill="none" stroke="#15123A" stroke-width="4"/>
+</svg>
