@@ -8,7 +8,7 @@ export const site = {
   email: '[CORREO DE CONTACTO]',
   playDeveloperUrl: '[ENLACE A LA PÁGINA DE DESARROLLADOR EN GOOGLE PLAY]',
   appStoreDeveloperUrl: '[ENLACE A LA PÁGINA DE DESARROLLADOR EN APP STORE]',
-  city: '[CITY]',
+  city: 'Almería',
   lang: 'en',
   ogLocale: 'en_US',
   tagline: 'Apps fresh out of the inkwell',
@@ -69,13 +69,14 @@ export const apps = {
 };
 
 export const story = {
-  title: 'How the inkwell started',
-  text: '[OUR STORY IN 2 TO 4 SENTENCES: how you met at university, when you started making apps and why]',
+  title: 'Ink, friendship and a little drama',
+  text: "We met in first year at university in Almería, between lecture notes, vending-machine coffee and bugs that weren't ours. We started Inkfinity to make apps with our own ink. Along the way, a friend switched sides and set up his own little shop. So we're back at the inkwell on a very serious mission: making the apps he can't. Better, honest and with a sense of humour.",
   milestonesLabel: 'Milestones',
   milestones: [
-    { year: '[YEAR]', text: '[MILESTONE, e.g. "We meet in first year"]' },
-    { year: '[YEAR]', text: '[MILESTONE, e.g. "First app published"]' },
-    { year: '[YEAR]', text: '[MILESTONE]' },
+    { year: '[YEAR]', text: "First year at university in Almería. We meet and nobody can split us up. Almost." },
+    { year: '[YEAR]', text: 'Inkfinity is born: lots of ink, zero budget and an octopus with too many ideas.' },
+    { year: '[YEAR]', text: 'A friend switches sides. We lose a tentacle, but not the drive.' },
+    { year: '[YEAR]', text: 'Back at the inkwell. Competition, start shaking.' },
   ],
 };
 

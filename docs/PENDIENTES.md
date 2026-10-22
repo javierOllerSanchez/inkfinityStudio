@@ -7,11 +7,9 @@ Marcadores visibles que quedan en el sitio. Casi todos se rellenan en `src/i18n/
 | `[CORREO DE CONTACTO]` | `src/i18n/es.ts` y `en.ts` → `site.email` (botón de Contacto y `/privacidad`) |
 | `[ENLACE A LA PÁGINA DE DESARROLLADOR EN GOOGLE PLAY]` | `src/i18n/es.ts` y `en.ts` → `site.playDeveloperUrl` (raíl de apps y pie) |
 | `[ENLACE A LA PÁGINA DE DESARROLLADOR EN APP STORE]` | `src/i18n/es.ts` y `en.ts` → `site.appStoreDeveloperUrl` (raíl de apps y pie) |
-| `[CIUDAD]` | `src/i18n/es.ts` y `en.ts` → `site.city` (copyright del pie) |
 | `[NOMBRE DE LA APP]`, `[DESCRIPCIÓN BREVE]` | `src/content/apps/app-ejemplo-1.md` y `app-ejemplo-2.md` |
 | `[ENLACE A GOOGLE PLAY]`, `[ENLACE A APP STORE]` | `src/content/apps/app-ejemplo-1.md` → `playUrl` y `appStoreUrl`. Cada app enseña la insignia de las tiendas en las que esté |
-| `[NUESTRA HISTORIA EN 2 A 4 FRASES…]` | `src/i18n/es.ts` y `en.ts` → `story.text` |
-| `[AÑO]`, `[HITO…]` | `src/i18n/es.ts` y `en.ts` → `story.milestones` (entre 2 y 4) |
+| `[AÑO]` | `src/i18n/es.ts` y `en.ts` → `story.milestones`: el año de cada hito (los textos ya están) |
 | Icono de cada app | `icon:` en cada `src/content/apps/*.md` (ruta en `public/`); mientras falte se pinta un color sólido |
 | `[CAPTURA]` | `screenshots:` en cada `src/content/apps/*.md`: lista de rutas en `public/` a capturas verticales del móvil (4 a 6). Mientras falten se pintan seis pantallas de marcador |
 | `[NOMBRE]`, `[ROL…]` | `src/i18n/es.ts` y `en.ts` → `crew.members` (4 de ejemplo; la rejilla aguanta de 2 a 8). El primero ya es Javier Oller Sánchez |

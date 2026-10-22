@@ -8,7 +8,7 @@ export const site = {
   email: '[CORREO DE CONTACTO]',
   playDeveloperUrl: '[ENLACE A LA PÁGINA DE DESARROLLADOR EN GOOGLE PLAY]',
   appStoreDeveloperUrl: '[ENLACE A LA PÁGINA DE DESARROLLADOR EN APP STORE]',
-  city: '[CIUDAD]',
+  city: 'Almería',
   lang: 'es',
   ogLocale: 'es_ES',
   tagline: 'Apps recién salidas del tintero',
@@ -71,14 +71,15 @@ export const apps = {
 };
 
 export const story = {
-  title: 'Cómo empezó el tintero',
-  text: '[NUESTRA HISTORIA EN 2 A 4 FRASES: cómo os conocisteis en la carrera, cuándo empezasteis a hacer apps y por qué]',
+  title: 'Tinta, amistad y un poco de drama',
+  text: 'Nos conocimos en primero de carrera en Almería, entre apuntes, cafés de máquina y bugs que no eran nuestros. Montamos Inkfinity para hacer apps con nuestra propia tinta. Por el camino, un amigo cambió de bando y montó su propio chiringuito. Así que hemos vuelto al tintero con una misión muy seria: hacer las apps que él no sabe hacer. Mejores, honestas y con gracia.',
   milestonesLabel: 'Hitos',
   // Entre 2 y 4 hitos, del más antiguo al más reciente
   milestones: [
-    { year: '[AÑO]', text: '[HITO, p. ej. «Nos conocemos en primero de carrera»]' },
-    { year: '[AÑO]', text: '[HITO, p. ej. «Primera app publicada»]' },
-    { year: '[AÑO]', text: '[HITO]' },
+    { year: '[AÑO]', text: 'Primero de carrera en Almería. Nos conocemos y ya no hay quien nos separe. Casi.' },
+    { year: '[AÑO]', text: 'Nace Inkfinity: mucha tinta, cero presupuesto y un pulpo con demasiadas ideas.' },
+    { year: '[AÑO]', text: 'Un amigo cambia de bando. Perdemos un tentáculo, pero no las ganas.' },
+    { year: '[AÑO]', text: 'Volvemos al tintero. Que tiemble la competencia.' },
   ],
 };
 
