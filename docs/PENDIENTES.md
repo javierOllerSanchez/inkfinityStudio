@@ -20,4 +20,4 @@ Marcadores visibles que quedan en el sitio. Casi todos se rellenan en `src/copy.
 | `[N]` número de miembros | comentario en `src/copy.ts` → `crew` |
 | `[FECHA DE ACTUALIZACIÓN]` | `src/copy.ts` → `privacy.updated` |
 | `[TEXTO LEGAL PENDIENTE]` | `src/copy.ts` → `privacy.body` (texto de la política de privacidad) |
-| Dominio definitivo | `astro.config.mjs` → `site` (ahora `https://inkfinity.example`) |
+| Dominio definitivo | Ahora vive en GitHub Pages: `https://javierollersanchez.github.io/inkfinityStudio/`. Con dominio propio: en `astro.config.mjs`, `site` = el dominio y `base` = `'/'`, y añadir `public/CNAME` |

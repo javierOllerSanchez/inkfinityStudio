@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../base';
 import { nav } from '../copy';
 
 // Trazo y ventosas del símbolo oficial (assets/logo/inkfinity-symbol-on-dark.svg), en línea para poder
@@ -8,8 +9,8 @@ const suckers = [[100, 50], [90, 53.3], [77.5, 50.7]];
 ---
 
 <!-- Fila de baldosas: símbolo · logotipo y enlaces · acción. El hueco entre baldosas es el fondo del tablero. -->
-<header class="site-header">
-  <a href="/" class="tile logo" aria-label={nav.home}>
+<header class="site-header" style={`--drop-mask: url("${withBase('/assets/logo/drop.svg')}")`}>
+  <a href={withBase('/')} class="tile logo" aria-label={nav.home}>
     <svg class="symbol" viewBox="0 0 132 90" width="44" height="30" aria-hidden="true">
       <g transform="translate(66 45) rotate(-7) translate(-60 -36)">
         <path class="track" d={tentacle} />
@@ -21,21 +22,21 @@ const suckers = [[100, 50], [90, 53.3], [77.5, 50.7]];
 
   <div class="tile links">
     <!-- Junto al símbolo forma el lockup; aparece cuando el logotipo grande del hero sale de la pantalla -->
-    <img class="wordmark" src="/assets/logo/inkfinity-wordmark-on-dark.svg" alt="" width="59" height="22" />
+    <img class="wordmark" src={withBase('/assets/logo/inkfinity-wordmark-on-dark.svg')} alt="" width="59" height="22" />
     <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">
       <span class="menu-icon" aria-hidden="true"></span>
       {nav.menu}
     </button>
     <nav id="site-nav" aria-label={nav.label}>
       <ul>
-        {nav.links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+        {nav.links.map((l) => <li><a href={withBase(l.href)}>{l.label}</a></li>)}
         <li class="pill" aria-hidden="true"></li>
         <li class="drop" aria-hidden="true"></li>
       </ul>
     </nav>
   </div>
 
-  <a href="/#apps" class="tile action">
+  <a href={withBase('/#apps')} class="tile action">
     <span>{nav.action}</span>
     <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 20 20 4M8 4h12v12" /></svg>
   </a>
@@ -209,7 +210,8 @@ const suckers = [[100, 50], [90, 53.3], [77.5, 50.7]];
     height: 11px;
     margin-left: -4px;
     background: var(--lime-400);
-    mask: url("/assets/logo/drop.svg") center / contain no-repeat;
+    /* La ruta llega como variable desde el HTML para que lleve la base del sitio */
+    mask: var(--drop-mask) center / contain no-repeat;
   }
 
   /* Sin resalte compartido (pantallas táctiles), cada enlace se ilumina solo */

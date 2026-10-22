@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../base';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { notFound } from '../copy';
 import AsciiReveal from '../components/AsciiReveal.astro';
@@ -9,12 +10,12 @@ import AsciiReveal from '../components/AsciiReveal.astro';
   <section class="board ko" aria-labelledby="ko-title">
     <div class="tile mascot">
       <AsciiReveal design="tinta" />
-      <img src="/assets/mascot/borron-ko.svg" alt="Borrón, la mascota, fuera de combate" width="480" height="480" />
+      <img src={withBase('/assets/mascot/borron-ko.svg')} alt="Borrón, la mascota, fuera de combate" width="480" height="480" />
     </div>
     <div class="tile message">
       <h1 id="ko-title">{notFound.title}</h1>
       <p>{notFound.text}</p>
-      <a class="btn btn--ink" href="/">{notFound.cta}</a>
+      <a class="btn btn--ink" href={withBase('/')}>{notFound.cta}</a>
     </div>
   </section>
 </BaseLayout>

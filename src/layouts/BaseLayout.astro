@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../base';
 import '../../design/tokens.css';
 import '../styles/global.css';
 import Header from '../components/Header.astro';
@@ -13,7 +14,7 @@ interface Props {
 const { title, description = site.description } = Astro.props;
 const fullTitle = title ? `${title} · ${site.name}` : `${site.name} · Apps recién salidas del tintero`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const ogImage = new URL('/og.png', Astro.site);
+const ogImage = new URL(withBase('/og.png'), Astro.site);
 ---
 
 <!doctype html>
@@ -27,14 +28,14 @@ const ogImage = new URL('/og.png', Astro.site);
     <link rel="canonical" href={canonical} />
     <meta name="theme-color" content="#15123A" />
 
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="icon" href="/assets/icons/favicon-32.png" sizes="32x32" type="image/png" />
-    <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon-180.png" />
-    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
+    <link rel="icon" href={withBase('/assets/icons/favicon-32.png')} sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href={withBase('/assets/icons/apple-touch-icon-180.png')} />
+    <link rel="sitemap" href={withBase('/sitemap-index.xml')} />
 
     <!-- Las dos fuentes de la primera pantalla; Caveat se pide cuando hace falta -->
-    <link rel="preload" href="/fonts/bricolage-grotesque-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/dm-sans-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={withBase('/fonts/bricolage-grotesque-latin.woff2')} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={withBase('/fonts/dm-sans-latin.woff2')} as="font" type="font/woff2" crossorigin />
 
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="es_ES" />

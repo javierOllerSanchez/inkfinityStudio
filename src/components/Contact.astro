@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../base';
 import { contact, site } from '../copy';
 import AsciiReveal from './AsciiReveal.astro';
 
@@ -43,7 +44,7 @@ const faces = {
   <div class="tile mascot" data-mood="idle" aria-hidden="true">
     <AsciiReveal design="ondas" />
     {Object.entries(faces).map(([mood, file]) => (
-      <img data-show={mood} src={`/assets/mascot/${file}.svg`} alt="" width="480" height="480" loading="lazy" />
+      <img data-show={mood} src={withBase(`/assets/mascot/${file}.svg`)} alt="" width="480" height="480" loading="lazy" />
     ))}
     {Object.entries(contact.moods).map(([mood, text]) => <p class="note" data-show={mood}>{text}</p>)}
   </div>
