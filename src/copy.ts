@@ -51,7 +51,6 @@ export const apps = {
 };
 
 export const crew = {
-  eyebrow: 'La crew',
   title: 'Un pulpo, varios tentáculos',
   lead: 'Cada uno lleva un brazo distinto del estudio.',
   // Número de miembros: [N]. La rejilla aguanta de 2 a 8.

@@ -92,19 +92,6 @@ a { color: var(--link); text-underline-offset: 0.2em; }
   .section { padding-block: var(--space-9); }
 }
 
-.section-head { display: grid; gap: var(--space-4); margin-bottom: var(--space-7); max-width: 40rem; }
-.section-head p { color: var(--text-muted); font-size: var(--fs-body-lg); }
-
-.eyebrow {
-  font-family: var(--font-mono);
-  font-weight: 500;
-  font-size: var(--fs-label);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--violet-600);
-}
-.theme-ink .eyebrow { color: var(--lime-400); }
-
 .marker { font-family: var(--font-mono); font-size: 0.9em; }
 
 /* Tablero (rediseño 2026): secciones hechas de baldosas planas. Los huecos dejan ver --ink-950. */
@@ -153,32 +140,8 @@ a { color: var(--link); text-underline-offset: 0.2em; }
    Todo el movimiento va dentro de prefers-reduced-motion: no-preference,
    y lo oculto para animar solo se oculta si hay JS (.js). */
 
-/* Tarjetas en 3D: el JS mueve --rx/--ry con el puntero; los hijos con .pop salen hacia delante */
-.tilt {
-  --tilt-shadow: var(--violet-600);
-  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
-  transform-style: preserve-3d;
-  transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
-}
-.theme-ink .tilt { --tilt-shadow: var(--lime-400); }
-.tilt:hover { box-shadow: 8px 8px 0 var(--tilt-shadow); }
-.tilt .pop { transition: transform var(--dur-base) var(--ease-out); }
-.tilt:hover .pop { transform: translateZ(40px); }
-
 /* Botones magnéticos: el JS mueve `translate` hacia el puntero */
 .btn { transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), translate 300ms var(--ease-out); }
-
-/* Subrayado lima que se dibuja bajo los h2 */
-.section-head h2::after {
-  content: "";
-  display: block;
-  width: 3ch;
-  height: 6px;
-  margin-top: var(--space-3);
-  background: var(--lime-400);
-  border-radius: var(--radius-pill);
-  transform-origin: left;
-}
 
 /* Barra de progreso de lectura (CSS puro, solo donde hay scroll-timeline) */
 .progress { display: none; }
@@ -203,15 +166,13 @@ a { color: var(--link); text-underline-offset: 0.2em; }
   /* Apariciones al hacer scroll, escalonadas con --i */
   .js [data-reveal] {
     opacity: 0;
-    translate: 0 40px;
-    scale: 0.96;
+    translate: 0 24px;
     transition:
       opacity 700ms var(--ease-out),
       translate 800ms var(--ease-out),
       scale 800ms var(--ease-out),
-      transform var(--dur-base) var(--ease-out),
-      box-shadow var(--dur-base) var(--ease-out);
-    transition-delay: calc(var(--i, 0) * 90ms), calc(var(--i, 0) * 90ms), calc(var(--i, 0) * 90ms), 0ms, 0ms;
+      rotate 800ms var(--ease-out);
+    transition-delay: calc(var(--i, 0) * 80ms);
   }
   .js [data-reveal].is-in { opacity: 1; translate: none; scale: none; }
 
@@ -222,7 +183,4 @@ a { color: var(--link); text-underline-offset: 0.2em; }
     rotate: none;
     transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
   }
-
-  .js .section-head h2::after { transform: scaleX(0); transition: transform 900ms 300ms var(--ease-out); }
-  .js .section-head.is-in h2::after { transform: none; }
 }

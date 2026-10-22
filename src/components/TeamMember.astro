@@ -3,48 +3,67 @@ import { crew } from '../copy';
 
 interface Props { member: (typeof crew.members)[number]; index: number }
 const { member, index } = Astro.props;
-const tones = ['coral', 'violet', 'lime', 'lavender'];
+// Tintes en orden fijo. Sin lima: es solo un chispazo y ya está en el hero.
+const tones = ['coral', 'violet', 'lavender', 'paper'];
 ---
 
-<li class="card tilt" data-reveal style={`--i:${index + 1}`}>
-  {member.avatar
-    ? <img class="avatar pop" src={member.avatar} alt={member.name} width="96" height="96" loading="lazy" />
-    : <span class={`avatar pop avatar--${tones[index % tones.length]}`}><span class="marker">{crew.avatarPlaceholder}</span></span>}
+<li class={`tile member tone--${tones[index % tones.length]}`} data-reveal style={`--i:${index + 1}`}>
+  <div class="portrait">
+    {member.avatar
+      ? <img src={member.avatar} alt={member.name} width="400" height="500" loading="lazy" />
+      : <span class="placeholder">{crew.avatarPlaceholder}</span>}
+  </div>
   <h3>{member.name}</h3>
   <p>{member.role}</p>
   {member.link && <a href={member.link.href}>{member.link.label}<span class="visually-hidden"> de {member.name}</span></a>}
 </li>
 
 <style>
-  .card {
-    display: grid;
-    gap: var(--space-2);
-    justify-items: start;
-    align-content: start;
-    padding: var(--space-5);
-    background: var(--surface);
-    border-radius: var(--radius-lg);
+  .member {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-1);
     min-width: 0;
+    padding: 0 0 var(--space-4);
+    color: var(--accent-ink);
   }
-  .avatar {
+  .tone--coral { background: var(--coral-500); }
+  .tone--violet { background: var(--violet-300); }
+  .tone--lavender { background: var(--lavender-50); }
+  .tone--paper { background: var(--paper-100); }
+
+  /* Retrato 4:5 a sangre. Las fotos se tratan igual para que parezcan un mismo juego: grises fundidos con el tinte. */
+  .portrait {
+    align-self: stretch;
     display: grid;
     place-items: center;
-    width: 96px;
-    height: 96px;
-    margin-bottom: var(--space-2);
-    border-radius: 50%;
-    object-fit: cover;
-    text-align: center;
-    color: var(--accent-ink);
-    font-size: 0.6875rem;
-    line-height: 1.2;
-    padding: var(--space-2);
+    aspect-ratio: 4 / 5;
+    margin-bottom: var(--space-3);
   }
-  .avatar--coral { background: var(--coral-500); }
-  .avatar--violet { background: var(--violet-300); }
-  .avatar--lime { background: var(--lime-400); }
-  .avatar--lavender { background: var(--lavender-50); }
-  h3 { font-size: 1.375rem; overflow-wrap: anywhere; }
-  p { color: var(--text-muted); font-size: var(--fs-small); overflow-wrap: anywhere; }
-  a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 700; }
+  .portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(1) contrast(1.15);
+    mix-blend-mode: multiply;
+  }
+  .placeholder { padding: var(--space-4); font-size: var(--fs-small); font-weight: 700; text-align: center; }
+
+  h3, p, a { margin-inline: var(--space-4); }
+  h3 { font-size: var(--fs-h3); overflow-wrap: anywhere; }
+  p { font-size: var(--fs-small); overflow-wrap: anywhere; }
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--accent-ink);
+    font-weight: 700;
+  }
+  a:focus-visible { outline-color: var(--accent-ink); }
+
+  @media (min-width: 1024px) {
+    h3, p, a { margin-inline: var(--space-5); }
+    .member { padding-bottom: var(--space-5); }
+  }
 </style>

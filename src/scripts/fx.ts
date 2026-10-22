@@ -23,19 +23,6 @@ if (motion && pointer) {
     return [(e.clientX - r.left) / r.width - 0.5, (e.clientY - r.top) / r.height - 0.5];
   };
 
-  // Tarjetas en 3D
-  document.querySelectorAll<HTMLElement>('.tilt').forEach((el) => {
-    el.addEventListener('pointermove', (e) => {
-      const [x, y] = offset(el, e);
-      el.style.setProperty('--ry', `${x * 14}deg`);
-      el.style.setProperty('--rx', `${-y * 14}deg`);
-    });
-    el.addEventListener('pointerleave', () => {
-      el.style.removeProperty('--rx');
-      el.style.removeProperty('--ry');
-    });
-  });
-
   // Botones magnéticos
   document.querySelectorAll<HTMLElement>('.btn').forEach((el) => {
     el.addEventListener('pointermove', (e) => {
