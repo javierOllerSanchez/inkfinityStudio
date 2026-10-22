@@ -133,7 +133,7 @@ const faces = {
     cursor: pointer;
     transition: background-color var(--dur-fast) var(--ease-out), scale var(--dur-fast) var(--ease-out);
   }
-  .send:hover { background: var(--ink-800); }
+  @media (hover: hover) and (pointer: fine) { .send:hover { background: var(--ink-800); } }
   .send:active { scale: 0.97; }
   .send:focus-visible { outline-color: var(--ink-900); }
 
@@ -161,16 +161,26 @@ const faces = {
     color: var(--lime-400);
     rotate: -5deg;
   }
-  [data-show] { display: none; }
+  /* Las cuatro caras están apiladas y se funden entre sí: con desenfoque se ve un Borrón que cambia
+     de gesto, no dos imágenes que se cruzan. Son transiciones y no keyframes porque cambian mientras escribes. */
+  /* visibility además de opacidad: las caras y notas ocultas no tapan a la visible ni cuentan como texto */
+  [data-show] { opacity: 0; visibility: hidden; transition: opacity 150ms ease, visibility 0s linear 150ms; }
   .mascot[data-mood="idle"] [data-show="idle"],
   .mascot[data-mood="ko"] [data-show="ko"],
   .mascot[data-mood="think"] [data-show="think"],
-  .mascot[data-mood="yay"] [data-show="yay"] { display: block; }
+  .mascot[data-mood="yay"] [data-show="yay"] { opacity: 1; visibility: visible; transition-delay: 0s; }
 
   @media (prefers-reduced-motion: no-preference) {
-    .mascot img[data-show] { animation: boing 400ms var(--ease-out); }
+    .mascot img[data-show] {
+      scale: 0.96;
+      filter: blur(2px);
+      transition: opacity 200ms ease, scale 240ms var(--ease-out), filter 200ms ease, visibility 0s linear 200ms;
+    }
+    .mascot[data-mood="idle"] img[data-show="idle"],
+    .mascot[data-mood="ko"] img[data-show="ko"],
+    .mascot[data-mood="think"] img[data-show="think"],
+    .mascot[data-mood="yay"] img[data-show="yay"] { scale: 1; filter: none; transition-delay: 0s; }
   }
-  @keyframes boing { from { scale: 0.94; rotate: -3deg; } }
 
   @media (min-width: 768px) {
     .bar { grid-template-columns: auto 1fr auto; min-height: 96px; }

@@ -65,9 +65,9 @@ import { footer, site } from '../copy';
     text-decoration-color: transparent;
     transition: text-decoration-color var(--dur-fast) var(--ease-out);
   }
-  .links a:hover { text-decoration-color: var(--lime-400); }
+  @media (hover: hover) and (pointer: fine) { .links a:hover { text-decoration-color: var(--lime-400); } }
 
-  .city { background: var(--paper-100); color: var(--accent-ink); font-weight: 700; }
+  .city { background: var(--texture-riso), var(--paper-100); color: var(--accent-ink); font-weight: 700; }
 
   .email { background: var(--ink-900); color: var(--white); }
   .email a { display: inline-flex; align-items: center; min-height: 44px; color: var(--white); font-size: var(--fs-body-lg); font-weight: 700; overflow-wrap: anywhere; }
@@ -86,9 +86,10 @@ import { footer, site } from '../copy';
     font-size: var(--fs-h3);
     line-height: 1.05;
     text-decoration: none;
-    transition: background-color var(--dur-fast) var(--ease-out);
+    transition: background-color var(--dur-fast) var(--ease-out), scale 160ms var(--ease-out);
   }
-  .play:hover { background: var(--coral-600); }
+  @media (hover: hover) and (pointer: fine) { .play:hover { background: var(--coral-600); } }
+  .play:active { scale: 0.98; }
   .play svg {
     align-self: flex-end;
     width: 48px;
@@ -99,7 +100,7 @@ import { footer, site } from '../copy';
     stroke-linejoin: round;
     transition: translate var(--dur-base) var(--ease-out);
   }
-  .play:hover svg { translate: 4px -4px; }
+  @media (hover: hover) and (pointer: fine) { .play:hover svg { translate: 4px -4px; } }
 
   /* Móvil: logotipo y apps primero, a todo el ancho; luego parejas */
   .name, .play { grid-column: 1 / -1; }

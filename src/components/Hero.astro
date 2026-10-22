@@ -111,7 +111,9 @@ const borron = borronRaw.replace('<path d="M160 138', '<path class="wave" d="M16
     stroke-linejoin: round;
     transition: translate var(--dur-base) var(--ease-out);
   }
-  .crew:hover svg { translate: 4px -4px; }
+  @media (hover: hover) and (pointer: fine) { .crew:hover svg { translate: 4px -4px; } }
+  .crew { transition: scale 160ms var(--ease-out); }
+  .crew:active { scale: 0.98; }
   .crew:focus-visible { outline-color: var(--lime-400); }
 
   /* Móvil: una columna; titular y acción antes que Borrón para que entren en la primera pantalla */
@@ -154,11 +156,11 @@ const borron = borronRaw.replace('<path d="M160 138', '<path class="wave" d="M16
     .borron :global(.wave) { animation: wave 2.4s ease-in-out 1.2s infinite alternate; }
     /* El resto de baldosas sube escalonado. Logotipo y titular solo se desplazan:
        sin opacidad, porque el logotipo es el LCP y el fundido lo retrasaba */
-    .lead, .crew { animation: rise 700ms var(--ease-out) both; }
-    .name, .title { animation: rise-solid 700ms var(--ease-out) both; }
-    .title { animation-delay: 70ms; }
-    .lead { animation-delay: 140ms; }
-    .crew { animation-delay: 210ms; }
+    .lead, .crew { animation: rise 550ms var(--ease-out) both; }
+    .name, .title { animation: rise-solid 550ms var(--ease-out) both; }
+    .title { animation-delay: 55ms; }
+    .lead { animation-delay: 110ms; }
+    .crew { animation-delay: 165ms; }
   }
   @keyframes shutter { from { clip-path: inset(100% 0 0 0 round var(--radius-md)); } to { clip-path: inset(0 0 0 0 round var(--radius-md)); } }
   @keyframes settle { from { scale: 1.12; translate: 0 6%; } }

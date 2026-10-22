@@ -1,13 +1,27 @@
 ---
 import { nav } from '../copy';
+
+// Trazo y ventosas del símbolo oficial (assets/logo/inkfinity-symbol-on-dark.svg), en línea para poder
+// dibujar el trazo según el scroll. La forma no cambia; solo cuánto de ella está pintado.
+const tentacle = 'M60 36 C72 15 104 14 106 36 C108 58 76 60 60 36 C44 12 14 14 14 36 C14 54 32 62 44 54 C51 49 46 39 38 43';
+const suckers = [[100, 50], [90, 53.3], [77.5, 50.7]];
 ---
 
-<!-- Fila de baldosas: símbolo · enlaces · acción. El hueco entre baldosas es el fondo del tablero. -->
+<!-- Fila de baldosas: símbolo · logotipo y enlaces · acción. El hueco entre baldosas es el fondo del tablero. -->
 <header class="site-header">
   <a href="/" class="tile logo" aria-label={nav.home}>
-    <img src="/assets/logo/inkfinity-symbol-on-dark.svg" alt="" width="66" height="45" />
+    <svg class="symbol" viewBox="0 0 132 90" width="44" height="30" aria-hidden="true">
+      <g transform="translate(66 45) rotate(-7) translate(-60 -36)">
+        <path class="track" d={tentacle} />
+        <path class="ink" d={tentacle} pathLength="1" />
+        {suckers.map(([cx, cy]) => <circle cx={cx} cy={cy} r="2.2" />)}
+      </g>
+    </svg>
   </a>
+
   <div class="tile links">
+    <!-- Junto al símbolo forma el lockup; aparece cuando el logotipo grande del hero sale de la pantalla -->
+    <img class="wordmark" src="/assets/logo/inkfinity-wordmark-on-dark.svg" alt="" width="59" height="22" />
     <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">
       <span class="menu-icon" aria-hidden="true"></span>
       {nav.menu}
@@ -15,15 +29,30 @@ import { nav } from '../copy';
     <nav id="site-nav" aria-label={nav.label}>
       <ul>
         {nav.links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+        <li class="pill" aria-hidden="true"></li>
+        <li class="drop" aria-hidden="true"></li>
       </ul>
     </nav>
   </div>
-  <a href="/#apps" class="tile action">{nav.action}</a>
+
+  <a href="/#apps" class="tile action">
+    <span>{nav.action}</span>
+    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 20 20 4M8 4h12v12" /></svg>
+  </a>
 </header>
 
 <script>
-  const btn = document.querySelector<HTMLButtonElement>('.menu-btn')!;
-  const navEl = document.getElementById('site-nav')!;
+  const header = document.querySelector<HTMLElement>('.site-header')!;
+  const btn = header.querySelector<HTMLButtonElement>('.menu-btn')!;
+  const navEl = header.querySelector<HTMLElement>('#site-nav')!;
+  const list = navEl.querySelector('ul')!;
+  const links = [...list.querySelectorAll<HTMLAnchorElement>('a')];
+  const pill = list.querySelector<HTMLElement>('.pill')!;
+  const drop = list.querySelector<HTMLElement>('.drop')!;
+  const desktop = matchMedia('(min-width: 768px)');
+  const fine = matchMedia('(hover: hover) and (pointer: fine)');
+
+  // Menú móvil
   const set = (open: boolean) => {
     btn.setAttribute('aria-expanded', String(open));
     navEl.classList.toggle('open', open);
@@ -31,6 +60,71 @@ import { nav } from '../copy';
   btn.addEventListener('click', () => set(btn.getAttribute('aria-expanded') !== 'true'));
   navEl.addEventListener('click', (e) => (e.target as Element).closest('a') && set(false));
   document.addEventListener('keydown', (e) => e.key === 'Escape' && set(false));
+
+  // El logotipo de la cabecera aparece cuando el del hero ya no se ve
+  const heroName = document.querySelector('.hero .name');
+  if (heroName) {
+    new IntersectionObserver(([e]) => header.classList.toggle('past-hero', !e.isIntersecting), {
+      rootMargin: '-64px 0px 0px 0px',
+    }).observe(heroName);
+  }
+
+  // Coloca un elemento de la lista sobre un enlace. Si estaba oculto, salta sin deslizarse.
+  const place = (el: HTMLElement, a: HTMLElement, visible: boolean) => {
+    if (!visible) el.style.transition = 'none';
+    el.style.transform = `translate(${a.offsetLeft}px, ${a.offsetTop}px)`;
+    el.style.width = `${a.offsetWidth}px`;
+    el.style.height = `${a.offsetHeight}px`;
+    if (!visible) {
+      el.getBoundingClientRect();
+      el.style.transition = '';
+    }
+  };
+
+  // Un único resalte que viaja entre enlaces (solo con ratón y en la fila de escritorio)
+  let pillOn = false;
+  links.forEach((a) =>
+    a.addEventListener('pointerenter', () => {
+      if (!fine.matches || !desktop.matches) return;
+      place(pill, a, pillOn);
+      pill.classList.add('on');
+      pillOn = true;
+    }),
+  );
+  list.addEventListener('pointerleave', () => {
+    pill.classList.remove('on');
+    pillOn = false;
+  });
+  if (fine.matches) list.classList.add('has-pill');
+
+  // Gota lima bajo la sección en la que estás
+  const ids = links.map((a) => a.hash.slice(1));
+  let active: string | null = null;
+  let dropOn = false;
+  const mark = () => {
+    links.forEach((a) => a.toggleAttribute('aria-current', a.hash === `#${active}`));
+    const a = links.find((l) => l.hash === `#${active}`);
+    if (a && desktop.matches) place(drop, a, dropOn);
+    drop.classList.toggle('on', !!a);
+    dropOn = !!a;
+  };
+  // Banda fina al 40 % de la altura: como mucho una sección la cruza a la vez
+  const spy = new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) active = e.target.id;
+        else if (active === e.target.id) active = null;
+      }
+      mark();
+    },
+    { rootMargin: '-40% 0px -59% 0px' },
+  );
+  ids.forEach((id) => {
+    const s = document.getElementById(id);
+    if (s) spy.observe(s);
+  });
+  desktop.addEventListener('change', mark);
+  addEventListener('resize', () => active && mark());
 </script>
 
 <style>
@@ -43,7 +137,12 @@ import { nav } from '../copy';
     padding: var(--board-gap) var(--board-gap) 0;
     background: var(--ink-950);
   }
+  /* Las baldosas de la cabecera no son las de las secciones: sin el relleno ni el recorte de .tile
+     (global.css), que la hacían medir 92 px y recortaban el menú desplegable */
   .tile {
+    position: static;
+    overflow: visible;
+    padding: 0;
     display: flex;
     align-items: center;
     min-height: 56px;
@@ -51,12 +150,38 @@ import { nav } from '../copy';
     background: var(--ink-900);
     color: var(--white);
   }
-  .logo { justify-content: center; width: 72px; flex: none; }
-  .logo img { width: 44px; }
-  .links { flex: 1; justify-content: flex-end; padding-inline: var(--space-3); }
 
-  ul { display: flex; gap: var(--space-1); margin: 0; padding: 0; list-style: none; }
+  /* Símbolo: pista en tinta y trazo coral que se dibuja con el scroll de la página */
+  .logo { justify-content: center; width: 72px; flex: none; }
+  .symbol { width: 44px; height: auto; overflow: visible; }
+  .symbol path { fill: none; stroke-width: 10.5; stroke-linecap: round; stroke-linejoin: round; }
+  /* Pista visible: la forma completa se reconoce aunque el trazo coral esté a medias */
+  .symbol .track { stroke: var(--tide-600); }
+  .symbol .ink { stroke: var(--coral-500); }
+  .symbol circle { fill: var(--ink-900); }
+  @supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .symbol .ink {
+        stroke-dasharray: 1;
+        /* Propiedades sueltas: el minificador descarta el atajo `animation` junto a `animation-timeline` */
+        animation-name: draw;
+        animation-duration: auto;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: scroll(root);
+      }
+    }
+  }
+  /* Arranca con un trozo dibujado para que el símbolo se reconozca desde el primer momento */
+  @keyframes draw { from { stroke-dashoffset: 0.85; } to { stroke-dashoffset: 0; } }
+
+  .links { flex: 1; justify-content: flex-end; gap: var(--space-3); padding-inline: var(--space-3); }
+  .wordmark { width: 59px; height: auto; margin-right: auto; padding-left: var(--space-2); }
+
+  ul { position: relative; display: flex; gap: var(--space-1); margin: 0; padding: 0; list-style: none; }
   nav a {
+    position: relative;
+    z-index: 1;
     display: flex;
     align-items: center;
     min-height: 44px;
@@ -65,30 +190,67 @@ import { nav } from '../copy';
     font-weight: 700;
     text-decoration: none;
     border-radius: var(--radius-sm);
-    transition: background-color var(--dur-fast) var(--ease-out);
   }
-  nav a:hover { background: var(--ink-800); }
   nav a:focus-visible { outline-color: var(--lime-400); }
 
+  /* Resalte y gota: los coloca el JS; sin JS no existen */
+  .pill, .drop { position: absolute; top: 0; left: 0; opacity: 0; pointer-events: none; }
+  .pill { border-radius: var(--radius-sm); background: var(--ink-800); }
+  .drop { display: none; }
+  .pill.on { opacity: 1; }
+
+  /* Gota de la marca (assets/logo/drop.svg) como máscara, en lima */
+  .drop::after, nav a[aria-current]::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -6px;
+    width: 8px;
+    height: 11px;
+    margin-left: -4px;
+    background: var(--lime-400);
+    mask: url("/assets/logo/drop.svg") center / contain no-repeat;
+  }
+
+  /* Sin resalte compartido (pantallas táctiles), cada enlace se ilumina solo */
+  @media (hover: hover) and (pointer: fine) {
+    ul:not(.has-pill) a:hover { background: var(--ink-800); }
+  }
+
+  /* La baldosa de acción: flecha que asoma al pasar y respuesta al pulsar */
   .action {
     flex: none;
+    gap: var(--space-2);
     padding-inline: var(--space-5);
     background: var(--coral-500);
     color: var(--accent-ink);
     font-weight: 700;
     text-decoration: none;
-    transition: background-color var(--dur-fast) var(--ease-out);
   }
-  .action:hover { background: var(--coral-600); }
+  .action svg { fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
   .action:focus-visible { outline-color: var(--lime-400); }
+  @media (hover: hover) and (pointer: fine) {
+    .action svg { opacity: 0; translate: -4px 4px; }
+    .action:hover { background: var(--coral-600); }
+    .action:hover svg { opacity: 1; translate: 0 0; }
+  }
 
   .menu-btn { display: none; }
+
+  @media (min-width: 768px) {
+    .drop { display: block; }
+    .drop.on { opacity: 1; }
+    /* En escritorio la gota la pone .drop, que viaja; la del enlace sobra */
+    nav a[aria-current]::after { content: none; }
+  }
 
   /* Móvil con JS: el menú se pliega tras un botón. Sin JS, los enlaces siguen visibles. */
   @media (max-width: 767px) {
     .action { display: none; }
     :global(.js) .action { display: flex; }
     nav a { padding: 0 var(--space-2); }
+    .wordmark { display: none; }
+    :global(.js) .wordmark { display: block; }
 
     :global(.js) .menu-btn {
       display: inline-flex;
@@ -99,6 +261,7 @@ import { nav } from '../copy';
       background: transparent;
       color: var(--white);
       border: 0;
+      border-radius: var(--radius-sm);
       font: 700 var(--fs-body) var(--font-body);
       cursor: pointer;
     }
@@ -114,18 +277,51 @@ import { nav } from '../copy';
     .menu-icon::before { top: -5px; }
     .menu-icon::after { top: 5px; }
 
-    /* El desplegable es otra baldosa bajo la fila */
+    /* El desplegable es otra baldosa bajo la fila; crece desde el botón */
     :global(.js) nav {
-      display: none;
       position: absolute;
       inset: 100% var(--board-gap) auto;
       margin-top: var(--board-gap);
       padding: var(--space-2);
       background: var(--ink-900);
       border-radius: var(--radius-md);
+      transform-origin: 75% 0;
+      visibility: hidden;
+      opacity: 0;
     }
-    :global(.js) nav.open { display: block; }
+    :global(.js) nav.open { visibility: visible; opacity: 1; }
     :global(.js) ul { flex-direction: column; }
     :global(.js) nav a { font-size: var(--fs-body-lg); padding: 0 var(--space-4); }
+    nav a[aria-current]::after { left: auto; right: var(--space-4); bottom: 50%; margin: 0 0 -5px; }
   }
+
+  /* Movimiento: todo dentro de no-preference */
+  @media (prefers-reduced-motion: no-preference) {
+    .pill { transition: transform 220ms var(--ease-out), width 220ms var(--ease-out), opacity 150ms ease; }
+    .drop { transition: transform 300ms var(--ease-out), width 300ms var(--ease-out), opacity 200ms ease; }
+    .action { transition: background-color 150ms ease, scale 160ms var(--ease-out); }
+    .action svg { transition: opacity 160ms ease, translate 200ms var(--ease-out); }
+    .action:active, .menu-btn:active { scale: 0.97; }
+    .menu-btn { transition: scale 160ms var(--ease-out); }
+    .wordmark { transition: opacity 250ms ease, translate 300ms var(--ease-out); }
+
+    @media (max-width: 767px) {
+      /* Entra en 200 ms y sale más rápido; los enlaces llegan escalonados */
+      :global(.js) nav {
+        scale: 0.96;
+        transition: opacity 140ms ease, scale 140ms var(--ease-out), visibility 0s linear 140ms;
+      }
+      :global(.js) nav.open {
+        scale: 1;
+        transition: opacity 200ms ease, scale 200ms var(--ease-out), visibility 0s;
+      }
+      :global(.js) nav li { opacity: 0; translate: 0 6px; transition: opacity 120ms ease, translate 120ms ease; }
+      :global(.js) nav.open li { opacity: 1; translate: 0 0; transition: opacity 200ms ease, translate 240ms var(--ease-out); }
+      :global(.js) nav.open li:nth-child(2) { transition-delay: 40ms; }
+      :global(.js) nav.open li:nth-child(3) { transition-delay: 80ms; }
+    }
+  }
+
+  /* En la landing, el logotipo de la cabecera espera a que se vaya el del hero */
+  :global(.js body:has(.hero)) .site-header:not(.past-hero) .wordmark { opacity: 0; translate: -6px 0; }
 </style>
