@@ -1,4 +1,4 @@
-# Brief · Landing page de Inkfinity Studio
+# Brief · Landing page de Inkfinity Software
 
 ## Objetivo
 
@@ -60,7 +60,7 @@ Una sola página con anclas (`#apps`, `#crew`, `#contacto`) más `/privacidad` y
 ### 6. Pie · fondo tinta
 - `inkfinity-lockup-horizontal-on-dark.svg` pequeño, eslogan «Ideas que no se acaban».
 - Enlaces: Google Play (página de desarrollador), Privacidad, Contacto.
-- «© 2026 Inkfinity Studio · Hecho con tinta infinita en [CIUDAD]».
+- «© 2026 Inkfinity Software · Hecho con tinta infinita en [CIUDAD]».
 
 ### Página `/privacidad`
 - Plantilla sobria con el texto de la política `[TEXTO LEGAL PENDIENTE]`, fecha de actualización y correo de contacto. Debe ser una URL estable y accesible sin JS.

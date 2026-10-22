@@ -1,14 +1,14 @@
-# Inkfinity Studio · Guía de marca
+# Inkfinity Software · Guía de marca
 
 > Versión 1.0 · octubre de 2026
 > Lienzo de diseño con todas las exploraciones: https://claude.ai/artifact/MWELREw4Sf2Hj27Dxh1YKm (privado, compartir desde su menú Share)
 
 ## 1. Quiénes somos
 
-Inkfinity Studio es un estudio de apps hecho por un grupo de amigos de la carrera. Hacemos apps por gusto, pero con cuidado: **pequeñas, útiles y con un punto de humor**.
+Inkfinity Software es un estudio de apps hecho por un grupo de amigos de la carrera. Hacemos apps por gusto, pero con cuidado: **pequeñas, útiles y con un punto de humor**.
 
 - **Nombre:** *Inkfinity* = *ink* (tinta) + *infinity* (infinito). Tinta que no se acaba: ideas que no paran.
-- **Nombre completo:** Inkfinity Studio (en Google Play, textos legales y la primera mención). En el día a día, *Inkfinity*.
+- **Nombre completo:** Inkfinity Software (en Google Play, textos legales y la primera mención). En el día a día, *Inkfinity*.
 - **Eslogan principal:** Apps recién salidas del tintero.
 - **Eslogan secundario:** Ideas que no se acaban.
 

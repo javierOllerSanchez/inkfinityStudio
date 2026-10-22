@@ -2,9 +2,9 @@
 // Values in [BRACKETS] are pending placeholders: see docs/PENDIENTES.md.
 
 export const site = {
-  name: 'Inkfinity Studio',
+  name: 'Inkfinity Software',
   description:
-    'Inkfinity Studio: small, useful Android and iOS apps with a touch of humour, made by a group of friends from university.',
+    'Inkfinity Software: small, useful Android and iOS apps with a touch of humour, made by a group of friends from university.',
   email: '[CORREO DE CONTACTO]',
   playDeveloperUrl: '[ENLACE A LA PÁGINA DE DESARROLLADOR EN GOOGLE PLAY]',
   appStoreDeveloperUrl: '[ENLACE A LA PÁGINA DE DESARROLLADOR EN APP STORE]',
@@ -23,7 +23,7 @@ export const paths = {
 };
 
 export const nav = {
-  home: 'Inkfinity Studio, home',
+  home: 'Inkfinity Software, home',
   label: 'Main',
   menu: 'Menu',
   switchLang: { label: 'ES', name: 'Español', hreflang: 'es' },
@@ -127,12 +127,12 @@ export const footer = {
   madeIn: 'Made with infinite ink in',
   emailLabel: 'Write to us',
   appsInvite: 'Our apps, on Google Play and the App Store',
-  copyright: '© 2026 Inkfinity Studio',
+  copyright: '© 2026 Inkfinity Software',
 };
 
 export const privacy = {
   title: 'Privacy policy',
-  description: 'Privacy policy for the Inkfinity Studio apps.',
+  description: 'Privacy policy for the Inkfinity Software apps.',
   updated: 'Last updated: [UPDATE DATE]',
   body: '[LEGAL TEXT PENDING]',
   contact: 'If you have any questions about your data, write to us at',

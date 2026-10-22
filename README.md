@@ -1,4 +1,4 @@
-# Inkfinity Studio · kit de marca y web
+# Inkfinity Software · kit de marca y web
 
 Todo lo necesario para empezar la web del estudio con Claude Code.
 
@@ -35,4 +35,4 @@ Necesitas Node.js 20 o superior (la versión LTS actual) para Astro.
 
 - Icono de desarrollador: `assets/play-store/developer-icon-512.png`
 - Imagen de cabecera de la página de desarrollador: `assets/play-store/developer-header-4096x2304.png`
-- Nombre de desarrollador: **Inkfinity Studio**
+- Nombre de desarrollador: **Inkfinity Software**

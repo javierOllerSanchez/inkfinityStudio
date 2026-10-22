@@ -2,9 +2,9 @@
 // Los valores entre [CORCHETES] son marcadores pendientes: ver docs/PENDIENTES.md.
 
 export const site = {
-  name: 'Inkfinity Studio',
+  name: 'Inkfinity Software',
   description:
-    'Inkfinity Studio: apps para Android e iOS pequeñas, útiles y con un punto de humor, hechas por un grupo de amigos de la carrera.',
+    'Inkfinity Software: apps para Android e iOS pequeñas, útiles y con un punto de humor, hechas por un grupo de amigos de la carrera.',
   email: '[CORREO DE CONTACTO]',
   playDeveloperUrl: '[ENLACE A LA PÁGINA DE DESARROLLADOR EN GOOGLE PLAY]',
   appStoreDeveloperUrl: '[ENLACE A LA PÁGINA DE DESARROLLADOR EN APP STORE]',
@@ -24,7 +24,7 @@ export const paths = {
 };
 
 export const nav = {
-  home: 'Inkfinity Studio, inicio',
+  home: 'Inkfinity Software, inicio',
   label: 'Principal',
   menu: 'Menú',
   // Enlace al otro idioma
@@ -134,12 +134,12 @@ export const footer = {
   madeIn: 'Hecho con tinta infinita en',
   emailLabel: 'Escríbenos',
   appsInvite: 'Nuestras apps, en Google Play y App Store',
-  copyright: '© 2026 Inkfinity Studio',
+  copyright: '© 2026 Inkfinity Software',
 };
 
 export const privacy = {
   title: 'Política de privacidad',
-  description: 'Política de privacidad de las apps de Inkfinity Studio.',
+  description: 'Política de privacidad de las apps de Inkfinity Software.',
   updated: 'Última actualización: [FECHA DE ACTUALIZACIÓN]',
   body: '[TEXTO LEGAL PENDIENTE]',
   contact: 'Si tienes dudas sobre tus datos, escríbenos a',

@@ -1,6 +1,6 @@
-# CLAUDE.md · Inkfinity Studio
+# CLAUDE.md · Inkfinity Software
 
-Este repositorio contiene la web de **Inkfinity Studio**, un estudio de apps para Android e iOS hecho por un grupo de amigos de la carrera. El primer objetivo es la **landing page**; más adelante se añadirán fichas de cada app y páginas legales.
+Este repositorio contiene la web de **Inkfinity Software**, un estudio de apps para Android e iOS hecho por un grupo de amigos de la carrera. El primer objetivo es la **landing page**; más adelante se añadirán fichas de cada app y páginas legales.
 
 Antes de diseñar o escribir copy, lee:
 
