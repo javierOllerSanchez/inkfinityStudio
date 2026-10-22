@@ -1,15 +1,5 @@
 /* Estilos base. Colores, fuentes y medidas solo desde design/tokens.css. */
 
-/* Temas de sección extra (la tinta ya viene en tokens.css como .theme-ink) */
-.theme-white { --bg: var(--white); --surface: var(--white); }
-.theme-coral {
-  --bg: var(--coral-500);
-  --surface: var(--coral-500);
-  --text: var(--accent-ink);
-  --text-muted: var(--accent-ink);
-  --link: var(--accent-ink);
-}
-
 *, *::before, *::after { box-sizing: border-box; }
 
 html { -webkit-text-size-adjust: 100%; }

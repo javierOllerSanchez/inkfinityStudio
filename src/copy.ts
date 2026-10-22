@@ -65,8 +65,21 @@ export const crew = {
 
 export const contact = {
   title: '¿Tienes una idea o has encontrado un bug?',
-  text: 'Escríbenos. Contestamos aunque sea con un tentáculo.',
-  cta: 'Escríbenos',
+  text: 'Suéltala en el tintero. Contestamos aunque sea con un tentáculo.',
+  kindLabel: 'Es',
+  // value = asunto del correo
+  kinds: [
+    { value: 'Idea para Inkfinity', label: 'Una idea', mood: 'idle' },
+    { value: 'Bug en una app de Inkfinity', label: 'Un bug', mood: 'ko' },
+  ],
+  fieldLabel: 'Cuéntanoslo',
+  placeholder: 'Una app que… o «en tal pantalla pasa que…»',
+  submit: 'Soltar en el tintero',
+  sent: '¡Toma ya! Se ha abierto tu correo con todo escrito. Solo te queda enviarlo.',
+  note: 'Se abre tu app de correo: aquí no se guarda nada.',
+  orWrite: 'O escríbenos a',
+  // Nota a mano junto a Borrón según lo que pasa en la barra
+  moods: { idle: 'Te escucho…', ko: '¡Ay! Cuenta, cuenta', think: 'Mmm…', yay: '¡Toma ya!' },
 };
 
 export const footer = {
