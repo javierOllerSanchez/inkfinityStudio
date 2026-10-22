@@ -2,41 +2,121 @@
 import { footer, site } from '../copy';
 ---
 
-<footer class="site-footer theme-ink">
-  <div class="container inner">
-    <div class="brand">
-      <img src="/assets/logo/inkfinity-lockup-horizontal-on-dark.svg" alt="Inkfinity" width="160" height="38" loading="lazy" />
-      <p>{footer.slogan}</p>
-    </div>
-    <nav aria-label={footer.label}>
-      <ul>
-        <li><a href={site.playDeveloperUrl}>{footer.links.play}</a></li>
-        <li><a href="/privacidad">{footer.links.privacy}</a></li>
-        <li><a href="/#contacto">{footer.links.contact}</a></li>
-      </ul>
-    </nav>
-    <p class="copy">{footer.copyright}</p>
+<!-- Las dos últimas filas del tablero: frase · enlaces · ciudad · correo / logotipo grande · Google Play -->
+<footer class="board site-footer">
+  <div class="tile statement">
+    <p class="slogan">{footer.slogan}</p>
+    <p class="small">{footer.copyright}</p>
   </div>
+
+  <nav class="tile links" aria-label={footer.label}>
+    <ul>
+      <li><a href={site.playDeveloperUrl}>{footer.links.play}</a></li>
+      <li><a href="/privacidad">{footer.links.privacy}</a></li>
+      <li><a href="/#contacto">{footer.links.contact}</a></li>
+    </ul>
+  </nav>
+
+  <div class="tile city">
+    <p>{footer.madeIn} {site.city}</p>
+  </div>
+
+  <div class="tile email">
+    <p class="small">{footer.emailLabel}</p>
+    <a href={`mailto:${site.email}`}>{site.email}</a>
+  </div>
+
+  <div class="tile name">
+    <img src="/assets/logo/inkfinity-lockup-horizontal-on-dark.svg" alt={site.name} width="1070" height="255" loading="lazy" />
+  </div>
+
+  <a class="tile play" href={site.playDeveloperUrl}>
+    <span>{footer.playInvite}</span>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20 20 4M8 4h12v12" /></svg>
+  </a>
 </footer>
 
 <style>
-  .site-footer {
-    background: var(--bg);
-    color: var(--text);
-    padding-block: var(--space-7);
-    border-top: 1px solid var(--border);
-  }
-  .inner { display: grid; gap: var(--space-5); }
-  .brand { display: grid; gap: var(--space-3); }
-  .brand img { width: 160px; }
-  .brand p, .copy { color: var(--text-muted); }
-  .copy { font-size: var(--fs-small); }
-  ul { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); margin: 0; padding: 0; list-style: none; }
-  a { display: inline-flex; align-items: center; min-height: 44px; color: var(--text); font-weight: 700; }
-  a:hover { color: var(--lime-400); }
+  .site-footer { grid-template-columns: 1fr 1fr; }
+  .tile { display: flex; flex-direction: column; justify-content: space-between; gap: var(--space-4); min-height: 160px; }
+  .small { font-size: var(--fs-small); }
+  a:focus-visible { outline-color: currentColor; }
 
-  @media (min-width: 768px) {
-    .inner { grid-template-columns: 1fr auto; align-items: center; }
-    .copy { grid-column: 1 / -1; }
+  .statement { background: var(--lavender-50); color: var(--accent-ink); }
+  .slogan {
+    font-family: var(--font-display);
+    font-weight: var(--display-weight);
+    font-stretch: var(--display-stretch);
+    font-variation-settings: "wdth" 75;
+    letter-spacing: var(--display-tracking);
+    font-size: var(--fs-h3);
+    line-height: 1.05;
+  }
+
+  .links { justify-content: flex-start; background: var(--ink-900); }
+  ul { margin: 0; padding: 0; list-style: none; }
+  .links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--white);
+    font-weight: 700;
+    text-decoration-color: transparent;
+    transition: text-decoration-color var(--dur-fast) var(--ease-out);
+  }
+  .links a:hover { text-decoration-color: var(--lime-400); }
+
+  .city { background: var(--paper-100); color: var(--accent-ink); font-weight: 700; }
+
+  .email { background: var(--ink-900); color: var(--white); }
+  .email a { color: var(--white); font-size: var(--fs-body-lg); font-weight: 700; overflow-wrap: anywhere; }
+
+  .name { justify-content: center; align-items: center; background: var(--ink-900); }
+  .name img { width: min(100%, 720px); }
+
+  .play {
+    background: var(--coral-500);
+    color: var(--accent-ink);
+    font-family: var(--font-display);
+    font-weight: var(--display-weight);
+    font-stretch: var(--display-stretch);
+    font-variation-settings: "wdth" 75;
+    letter-spacing: var(--display-tracking);
+    font-size: var(--fs-h3);
+    line-height: 1.05;
+    text-decoration: none;
+    transition: background-color var(--dur-fast) var(--ease-out);
+  }
+  .play:hover { background: var(--coral-600); }
+  .play svg {
+    align-self: flex-end;
+    width: 48px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: translate var(--dur-base) var(--ease-out);
+  }
+  .play:hover svg { translate: 4px -4px; }
+
+  /* Móvil: logotipo y Google Play primero, a todo el ancho; luego parejas */
+  .name, .play { grid-column: 1 / -1; }
+  .name { order: 1; min-height: 160px; }
+  .play { order: 2; }
+  .links { order: 3; }
+  .email { order: 4; }
+  .city { order: 5; }
+  .statement { order: 6; }
+
+  @media (min-width: 1024px) {
+    .site-footer { grid-template-columns: repeat(12, 1fr); }
+    .tile { order: 0; min-height: 220px; }
+    .statement { grid-column: 1 / 5; }
+    .links { grid-column: 5 / 8; }
+    .city { grid-column: 8 / 10; }
+    .email { grid-column: 10 / -1; }
+    .name { grid-column: 1 / 9; min-height: 320px; }
+    .play { grid-column: 9 / -1; }
   }
 </style>

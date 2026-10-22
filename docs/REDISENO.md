@@ -59,3 +59,9 @@ La marca manda (CLAUDE.md la declara no negociable). Donde la skill y la marca c
 - **Sombra dura en botones:** la marca la marca como *opcional*. Se quita: las baldosas ya dan el contraste.
 - **Fotos reales (la skill pide ≥ 4):** la marca es ilustración plana y no hay fotos propias. En su lugar: Borrón (PNG 960 px), capturas reales de las apps cuando existan y las fotos de la crew. Sin fotos de archivo genéricas.
 - **Caveat:** una nota a mano como máximo, como dice la marca.
+
+## 5. Estado (22 oct. 2026)
+
+Construidas en el tablero: cabecera, hero, reglas, apps, crew, contacto y pie. Inspector final (`.taste-skill/after/`): de 15 fallos a 2, los dos de marca (violeta y sin fotos propias). Sin scroll horizontal ni márgenes desiguales.
+
+Pendiente: `/privacidad` y `/404` siguen con el estilo anterior (la sombra dura de `.btn--coral` y la clase `.marker` en mono solo las usan ellas), y la fuente JetBrains Mono se sigue descargando aunque la landing ya no la usa. Repaso final con *impeccable* y Lighthouse.

@@ -83,10 +83,13 @@ export const contact = {
 };
 
 export const footer = {
-  slogan: 'Ideas que no se acaban',
+  slogan: 'Ideas que no se acaban.',
   label: 'Pie de página',
   links: { play: 'Google Play', privacy: 'Privacidad', contact: 'Contacto' },
-  copyright: `© 2026 Inkfinity Studio · Hecho con tinta infinita en ${site.city}`,
+  madeIn: 'Hecho con tinta infinita en',
+  emailLabel: 'Escríbenos',
+  playInvite: 'Nuestras apps en Google Play',
+  copyright: '© 2026 Inkfinity Studio',
 };
 
 export const privacy = {
