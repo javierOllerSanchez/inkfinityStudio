@@ -15,7 +15,11 @@ const borron = borronRaw
 <!-- Tablero 2×2: logotipo · Borrón · titular · frase + acción -->
 <section class="board hero" aria-labelledby="hero-title">
   <div class="tile name">
-    <img src={withBase('/assets/logo/inkfinity-wordmark-color.svg')} alt={site.name} width="1056" height="400" fetchpriority="high" />
+    <!-- «studio» como descriptor secundario del logotipo oficial (que no se toca): fina, espaciada y con una gota -->
+    <div class="lockup">
+      <img src={withBase('/assets/logo/inkfinity-wordmark-color.svg')} alt={site.name} width="1056" height="400" fetchpriority="high" />
+      <span class="studio" aria-hidden="true"><svg viewBox="0 0 10 14"><path d="M5 0 C7 3.2 10 6.4 10 9 A5 5 0 0 1 0 9 C0 6.4 3 3.2 5 0 Z" /></svg>studio</span>
+    </div>
   </div>
 
   <div class="tile mascot">
@@ -45,10 +49,25 @@ const borron = borronRaw
 
   /* Logotipo: el SVG oficial a todo el ancho de la baldosa, apoyado abajo a la izquierda */
   .name { display: flex; align-items: flex-end; background: var(--lavender-50); }
-  .name img { width: 100%; }
+  .lockup { display: flex; flex-direction: column; align-items: flex-end; width: 100%; }
+  .lockup img { width: 100%; }
+  /* Contraste con el logotipo: él condensado y macizo, «studio» ancho, ligero y muy espaciado */
+  .studio {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    margin: -0.35em -0.5em 0 0;
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: clamp(0.95rem, 2.3vw, 1.75rem);
+    letter-spacing: 0.5em;
+    line-height: 1;
+    color: var(--violet-600);
+  }
+  .studio svg { width: 0.5em; fill: var(--coral-500); }
   @media (min-width: 1024px) {
     /* Que el tablero quepa en la primera pantalla: el logotipo no pasa del 34 % de alto */
-    .name img { width: min(100%, 34svh * 2.64); }
+    .lockup { width: min(100%, 34svh * 2.64); }
   }
 
   /* Borrón muy grande sobre tinta */
