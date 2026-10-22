@@ -48,7 +48,7 @@ export const hero = {
 };
 
 export const howWeWork = {
-  title: 'Tres reglas y un pulpo',
+  title: 'Tres reglas y un chipirón',
   rules: [
     { title: 'Pequeñas.', text: 'Apps que hacen una cosa y la hacen bien. Sin relleno.' },
     { title: 'Útiles.', text: 'Si no la usaríamos nosotros, no sale del tintero.' },
@@ -84,7 +84,7 @@ export const story = {
 };
 
 export const crew = {
-  title: 'Un pulpo, varios tentáculos',
+  title: 'Un chipirón, varios tentáculos',
   lead: 'Cada uno lleva un brazo distinto del estudio.',
   // Número de miembros: [N]. La rejilla aguanta de 2 a 8.
   members: [

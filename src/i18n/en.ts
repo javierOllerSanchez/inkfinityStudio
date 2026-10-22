@@ -45,7 +45,7 @@ export const hero = {
 };
 
 export const howWeWork = {
-  title: 'Three rules and an octopus',
+  title: 'Three rules and a baby squid',
   rules: [
     { title: 'Small.', text: 'Apps that do one thing and do it well. No filler.' },
     { title: 'Useful.', text: "If we wouldn't use it ourselves, it stays in the inkwell." },
@@ -81,7 +81,7 @@ export const story = {
 };
 
 export const crew = {
-  title: 'One octopus, many tentacles',
+  title: 'One baby squid, many tentacles',
   lead: 'Each of us handles a different arm of the studio.',
   members: [
     {
