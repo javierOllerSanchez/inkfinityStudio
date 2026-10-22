@@ -62,6 +62,25 @@ La marca manda (CLAUDE.md la declara no negociable). Donde la skill y la marca c
 
 ## 5. Estado (22 oct. 2026)
 
-Construidas en el tablero: cabecera, hero, reglas, apps, crew, contacto y pie. Inspector final (`.taste-skill/after/`): de 15 fallos a 2, los dos de marca (violeta y sin fotos propias). Sin scroll horizontal ni márgenes desiguales.
+Todo el sitio está en el tablero: cabecera, hero, reglas, apps, crew, contacto, pie, `/privacidad` y `/404`.
 
-Pendiente: `/privacidad` y `/404` siguen con el estilo anterior (la sombra dura de `.btn--coral` y la clase `.marker` en mono solo las usan ellas), y la fuente JetBrains Mono se sigue descargando aunque la landing ya no la usa. Repaso final con *impeccable* y Lighthouse.
+**Lighthouse 12.6.1** (build de producción, Chrome headless):
+
+| Página | Rendimiento | Accesibilidad | Buenas prácticas | SEO |
+|---|---|---|---|---|
+| `/` móvil | 96 | 100 | 100 | 100 |
+| `/` escritorio | 100 | 100 | 100 | 100 |
+| `/privacidad` móvil | 100 | 100 | 100 | 100 |
+| `/404` móvil | 100 | 100 | 100 | 100 |
+
+El LCP en móvil (2,7 s) es el logotipo del hero; lo que más lo retrasa es la hoja de Google Fonts, que bloquea el render (≈ 0,9 s). Siguiente mejora posible: servir las fuentes desde el propio sitio.
+
+**Inspector de design-taste-frontend:** de 15 fallos a 2, los dos de marca (violeta; sin fotos propias). `lint` sin fallos ni avisos.
+
+**Detector de impeccable:** queda un aviso, «ilustración hecha con formas», que es Borrón en línea: falso positivo, es la mascota oficial.
+
+**Arreglado en el repaso:** rebote elástico en las entradas de Borrón (ahora frena suave), palabras sueltas al final de párrafo (`text-wrap: pretty`), anillo de foco de la fila de capturas sin contraste sobre coral (ahora toma el color del texto de la franja), enlace del correo del pie por debajo de 44 px, `fetchpriority="high"` en el logotipo del hero, JetBrains Mono ya no se descarga y fuera los estilos que no usaba nadie (`.container`, `.section`, `.marker`, `.btn--coral`, `.link-arrow`, temas coral y blanco).
+
+**Comprobado a mano:** sin scroll horizontal a 360, 390, 768 y 1440 px; objetivos táctiles ≥ 44 px; un solo `h1` por página; menú móvil con teclado y Escape; la barra de contacto con flechas y lector de pantalla (`role="status"`); todo el movimiento dentro de `prefers-reduced-motion: no-preference`.
+
+**Avisos que se quedan a propósito:** 13 tamaños de letra (la escala de la marca más los titulares de cada baldosa); tres familias (DM Sans, Bricolage y Caveat, como pide la guía); sin vídeo.

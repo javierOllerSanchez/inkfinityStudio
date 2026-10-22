@@ -2,7 +2,7 @@
    Fuente de verdad para colores, tipografía, espaciado y radios.
    Importa este archivo una vez en el layout global. */
 
-@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=Caveat:wght@700&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=Caveat:wght@700&family=DM+Sans:wght@400;500;700&display=swap");
 
 :root {
   /* ---- Paleta de marca ---- */
@@ -35,7 +35,7 @@
   /* ---- Tipografía ---- */
   --font-display: "Bricolage Grotesque", system-ui, sans-serif; /* usar con font-stretch: 75% y peso 800 */
   --font-body: "DM Sans", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace; /* no se carga desde el rediseño de 2026: la web ya no tiene etiquetas */
   --font-hand: "Caveat", cursive; /* notas a mano, con moderación */
 
   --display-stretch: 75%;

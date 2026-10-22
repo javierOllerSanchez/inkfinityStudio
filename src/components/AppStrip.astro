@@ -72,7 +72,8 @@ const tone = app.color === 'lime' ? 'lavender' : app.color;
     font-weight: 700;
   }
   .tone--lavender .shot-placeholder { background: var(--white); }
-  .shots:focus-visible { outline-offset: -3px; }
+  /* El anillo toma el color del texto de la franja: tinta sobre coral y lavanda, blanco sobre violeta y tinta */
+  .shots:focus-visible { outline-color: currentColor; outline-offset: -3px; }
 
   .caption {
     display: grid;
