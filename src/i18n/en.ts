@@ -58,10 +58,10 @@ export const apps = {
   lead: 'Few, and well made. For Android and iOS.',
   stores: { play: 'All on Google Play', appStore: 'All on the App Store' },
   status: { disponible: 'Available', pronto: 'Coming soon', tintero: 'In the inkwell' },
-  // PENDING: official English badges (see docs/PENDIENTES.md); until then the Spanish ones, alt matching their text
+  // Official English badges (Google Play badges page and Apple Marketing Tools), unmodified
   badges: {
-    play: { src: '/assets/badges/google-play-es.png', alt: 'Disponible en Google Play' },
-    appStore: { src: '/assets/badges/app-store-es.svg', alt: 'Consíguelo en el App Store' },
+    play: { src: '/assets/badges/google-play-en.png', alt: 'Get it on Google Play' },
+    appStore: { src: '/assets/badges/app-store-en.svg', alt: 'Download on the App Store' },
   },
   shots: 'Screenshots of',
   shotPlaceholder: '[SCREENSHOT]',

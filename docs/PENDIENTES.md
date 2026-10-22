@@ -21,6 +21,5 @@ Marcadores visibles que quedan en el sitio. Casi todos se rellenan en `src/i18n/
 | `[FECHA DE ACTUALIZACIÓN]` | `src/i18n/es.ts` y `en.ts` → `privacy.updated` |
 | `[TEXTO LEGAL PENDIENTE]` | `src/i18n/es.ts` y `en.ts` → `privacy.body` (texto de la política de privacidad) |
 | Dominio definitivo | Ahora vive en GitHub Pages: `https://javierollersanchez.github.io/inkfinityStudio/`. Con dominio propio: en `astro.config.mjs`, `site` = el dominio y `base` = `'/'`, y añadir `public/CNAME` |
-| Insignias oficiales en inglés | La versión `/en/` usa de momento las insignias en español. Faltan «Get it on Google Play» y «Download on the App Store» oficiales en `public/assets/badges/`, y cambiar `apps.badges` en `src/i18n/en.ts` |
 | Descripción de cada app en inglés | `src/content/apps/*.md` tiene un solo `description`; cuando haya apps reales, añadir la versión inglesa |
 | 404 en inglés | La 404 es una sola página y sale en español |
