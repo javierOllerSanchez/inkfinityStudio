@@ -4,9 +4,10 @@
 export const site = {
   name: 'Inkfinity Studio',
   description:
-    'Inkfinity Studio: apps Android pequeñas, útiles y con un punto de humor, hechas por un grupo de amigos de la carrera.',
+    'Inkfinity Studio: apps para Android e iOS pequeñas, útiles y con un punto de humor, hechas por un grupo de amigos de la carrera.',
   email: '[CORREO DE CONTACTO]',
-  playDeveloperUrl: '[ENLACE A LA PÁGINA DE DESARROLLADOR]',
+  playDeveloperUrl: '[ENLACE A LA PÁGINA DE DESARROLLADOR EN GOOGLE PLAY]',
+  appStoreDeveloperUrl: '[ENLACE A LA PÁGINA DE DESARROLLADOR EN APP STORE]',
   city: '[CIUDAD]',
 };
 
@@ -14,9 +15,10 @@ export const nav = {
   home: 'Inkfinity Studio, inicio',
   label: 'Principal',
   menu: 'Menú',
-  action: 'Ver apps',
+  // La baldosa coral de la cabecera; no se repite en los enlaces
+  action: 'Apps',
   links: [
-    { href: '/#apps', label: 'Apps' },
+    { href: '/#historia', label: 'Historia' },
     { href: '/#crew', label: 'Crew' },
     { href: '/#contacto', label: 'Contacto' },
   ],
@@ -41,13 +43,25 @@ export const howWeWork = {
 
 export const apps = {
   title: 'Lo que ha salido del tintero',
-  lead: 'Pocas y bien hechas. Todas para Android.',
-  all: 'Ver todas en Google Play',
+  lead: 'Pocas y bien hechas. Para Android e iOS.',
+  stores: { play: 'Todas en Google Play', appStore: 'Todas en el App Store' },
   status: { disponible: 'Disponible', pronto: 'Muy pronto', tintero: 'En el tintero' },
-  badgeLabel: 'Disponible en Google Play',
+  badges: { play: 'Disponible en Google Play', appStore: 'Consíguelo en el App Store' },
   shots: 'Capturas de',
   shotPlaceholder: '[CAPTURA]',
   next: 'La próxima está en el tintero…',
+};
+
+export const story = {
+  title: 'Cómo empezó el tintero',
+  text: '[NUESTRA HISTORIA EN 2 A 4 FRASES: cómo os conocisteis en la carrera, cuándo empezasteis a hacer apps y por qué]',
+  milestonesLabel: 'Hitos',
+  // Entre 2 y 4 hitos, del más antiguo al más reciente
+  milestones: [
+    { year: '[AÑO]', text: '[HITO, p. ej. «Nos conocemos en primero de carrera»]' },
+    { year: '[AÑO]', text: '[HITO, p. ej. «Primera app publicada»]' },
+    { year: '[AÑO]', text: '[HITO]' },
+  ],
 };
 
 export const crew = {
@@ -85,10 +99,10 @@ export const contact = {
 export const footer = {
   slogan: 'Ideas que no se acaban.',
   label: 'Pie de página',
-  links: { play: 'Google Play', privacy: 'Privacidad', contact: 'Contacto' },
+  links: { play: 'Google Play', appStore: 'App Store', privacy: 'Privacidad', contact: 'Contacto' },
   madeIn: 'Hecho con tinta infinita en',
   emailLabel: 'Escríbenos',
-  playInvite: 'Nuestras apps en Google Play',
+  appsInvite: 'Nuestras apps, en Google Play y App Store',
   copyright: '© 2026 Inkfinity Studio',
 };
 

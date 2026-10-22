@@ -2,7 +2,7 @@
 import { footer, site } from '../copy';
 ---
 
-<!-- Las dos últimas filas del tablero: frase · enlaces · ciudad · correo / logotipo grande · Google Play -->
+<!-- Las dos últimas filas del tablero: frase · enlaces · ciudad · correo / logotipo grande · apps -->
 <footer class="board site-footer">
   <div class="tile statement">
     <p class="slogan">{footer.slogan}</p>
@@ -12,6 +12,7 @@ import { footer, site } from '../copy';
   <nav class="tile links" aria-label={footer.label}>
     <ul>
       <li><a href={site.playDeveloperUrl}>{footer.links.play}</a></li>
+      <li><a href={site.appStoreDeveloperUrl}>{footer.links.appStore}</a></li>
       <li><a href="/privacidad">{footer.links.privacy}</a></li>
       <li><a href="/#contacto">{footer.links.contact}</a></li>
     </ul>
@@ -30,8 +31,8 @@ import { footer, site } from '../copy';
     <img src="/assets/logo/inkfinity-lockup-horizontal-on-dark.svg" alt={site.name} width="1070" height="255" loading="lazy" />
   </div>
 
-  <a class="tile play" href={site.playDeveloperUrl}>
-    <span>{footer.playInvite}</span>
+  <a class="tile play" href="/#apps">
+    <span>{footer.appsInvite}</span>
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20 20 4M8 4h12v12" /></svg>
   </a>
 </footer>
@@ -100,7 +101,7 @@ import { footer, site } from '../copy';
   }
   .play:hover svg { translate: 4px -4px; }
 
-  /* Móvil: logotipo y Google Play primero, a todo el ancho; luego parejas */
+  /* Móvil: logotipo y apps primero, a todo el ancho; luego parejas */
   .name, .play { grid-column: 1 / -1; }
   .name { order: 1; min-height: 160px; }
   .play { order: 2; }

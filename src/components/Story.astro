@@ -1,0 +1,75 @@
+---
+import { story } from '../copy';
+---
+
+<!-- Borrón riso sobre papel · la historia sobre tinta · los hitos en una fila -->
+<section id="historia" class="board story" aria-labelledby="story-title">
+  <div class="tile mascot" data-reveal="pop">
+    <img src="/assets/mascot/borron-riso.svg" alt="" width="480" height="480" loading="lazy" />
+  </div>
+
+  <div class="tile tale" data-reveal style="--i:1">
+    <h2 id="story-title">{story.title}</h2>
+    <p>{story.text}</p>
+  </div>
+
+  <ol class="tile milestones" aria-label={story.milestonesLabel}>
+    {story.milestones.map((m, i) => (
+      <li data-reveal style={`--i:${i + 1}`}>
+        <span class="year">{m.year}</span>
+        <p>{m.text}</p>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<style>
+  /* La versión riso de Borrón va sobre el papel riso, como pide la marca */
+  .mascot { display: grid; place-items: center; min-height: 64vw; background: var(--paper-100); }
+  .mascot img { width: min(90%, 440px); }
+
+  .tale {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: var(--space-5);
+    padding-top: var(--space-8);
+    background: var(--ink-900);
+    color: var(--white);
+  }
+  h2 { font-size: clamp(2.75rem, 11vw, 5.5rem); line-height: 0.92; text-wrap: balance; }
+  .tale p { font-size: var(--fs-body-lg); max-width: 40ch; }
+
+  /* Orden real (del más antiguo al más reciente): por eso es un <ol>, sin números a la vista */
+  .milestones {
+    display: grid;
+    gap: var(--space-6);
+    margin: 0;
+    padding: var(--space-6) var(--space-5);
+    list-style: none;
+    background: var(--lavender-50);
+    color: var(--accent-ink);
+  }
+  .milestones li { display: grid; gap: var(--space-2); align-content: start; }
+  .year {
+    font-family: var(--font-display);
+    font-weight: var(--display-weight);
+    font-stretch: var(--display-stretch);
+    font-variation-settings: "wdth" 75;
+    letter-spacing: var(--display-tracking);
+    font-size: clamp(2.5rem, 4.6vw, 4.5rem); /* mismo paso que el titular de la crew */
+    line-height: 1;
+  }
+  .milestones p { font-size: var(--fs-body); max-width: 30ch; }
+
+  @media (min-width: 768px) {
+    .milestones { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+  }
+  @media (min-width: 1024px) {
+    .story { grid-template-columns: repeat(12, 1fr); }
+    .mascot { grid-column: 1 / 6; min-height: 0; }
+    .tale { grid-column: 6 / -1; min-height: 56svh; padding: var(--space-8) var(--space-6) var(--space-6); }
+    h2 { font-size: clamp(2.75rem, 5.6vw, 5.5rem); } /* mismo paso que el titular del hero */
+    .milestones { grid-column: 1 / -1; padding: var(--space-7) var(--space-6); }
+  }
+</style>

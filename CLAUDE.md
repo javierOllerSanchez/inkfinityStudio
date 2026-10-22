@@ -1,6 +1,6 @@
 # CLAUDE.md · Inkfinity Studio
 
-Este repositorio contiene la web de **Inkfinity Studio**, un estudio de apps Android hecho por un grupo de amigos de la carrera. El primer objetivo es la **landing page**; más adelante se añadirán fichas de cada app y páginas legales.
+Este repositorio contiene la web de **Inkfinity Studio**, un estudio de apps para Android e iOS hecho por un grupo de amigos de la carrera. El primer objetivo es la **landing page**; más adelante se añadirán fichas de cada app y páginas legales.
 
 Antes de diseñar o escribir copy, lee:
 
@@ -24,7 +24,7 @@ src/
   content/apps/                 # una entrada por app (Markdown o JSON) para la sección de apps
   pages/
     index.astro                 # landing
-    privacidad.astro            # política de privacidad (Google Play la exige)
+    privacidad.astro            # política de privacidad (Google Play y el App Store la exigen)
     404.astro                   # error con Borrón KO
 public/
   assets/                       # copia de /assets (logos, mascota, iconos, patrón)
@@ -53,11 +53,12 @@ Mueve o copia `assets/` a `public/assets/` al montar el proyecto y conserva los 
 - **SEO y social:** `title` y `meta description` por página, Open Graph y Twitter Card (imagen: `assets/play-store/developer-header-4096x2304.png` recortada a 1200×630), `sitemap` y `robots.txt`.
 - **Contenido pendiente:** no inventes datos (nombres de apps, miembros, cifras, enlaces). Usa marcadores visibles como `[NOMBRE DE LA APP]` o `[ENLACE A GOOGLE PLAY]` y lístalos en `docs/PENDIENTES.md`.
 
-## Google Play
+## Tiendas (Google Play y App Store)
 
 - Para el botón «Disponible en Google Play» usa la **insignia oficial** de Google, descargada de su página de insignias, sin modificarla. No la recrees con CSS.
-- El enlace del estudio apuntará a la página de desarrollador de Google Play: `[ENLACE A LA PÁGINA DE DESARROLLADOR]`.
-- La política de privacidad debe estar publicada en una URL estable (`/privacidad`) porque Google Play la pide para cada app.
+- Para el App Store usa igual la **insignia oficial** de Apple («Consíguelo en el App Store»), descargada de Apple Marketing Tools, sin modificarla.
+- Los enlaces del estudio apuntan a las páginas de desarrollador de cada tienda: `site.playDeveloperUrl` y `site.appStoreDeveloperUrl` en `src/copy.ts`.
+- La política de privacidad debe estar publicada en una URL estable (`/privacidad`) porque las dos tiendas la piden para cada app.
 
 ## Forma de trabajar
 

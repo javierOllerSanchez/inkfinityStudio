@@ -12,7 +12,10 @@ const entries = (await getCollection('apps')).sort((a, b) => a.data.order - b.da
     <div class="rail-inner" data-reveal>
       <h2 id="apps-title">{apps.title}</h2>
       <p>{apps.lead}</p>
-      <a class="all" href={site.playDeveloperUrl}>{apps.all} <span aria-hidden="true">→</span></a>
+      <ul class="stores">
+        <li><a href={site.playDeveloperUrl}>{apps.stores.play} <span aria-hidden="true">→</span></a></li>
+        <li><a href={site.appStoreDeveloperUrl}>{apps.stores.appStore} <span aria-hidden="true">→</span></a></li>
+      </ul>
     </div>
   </div>
 
@@ -30,7 +33,8 @@ const entries = (await getCollection('apps')).sort((a, b) => a.data.order - b.da
   .rail-inner { display: grid; gap: var(--space-4); justify-items: start; }
   h2 { font-size: clamp(2.5rem, 9vw, 3rem); line-height: 0.95; text-wrap: balance; }
   .rail p { font-size: var(--fs-body-lg); }
-  .all {
+  .stores { margin: 0; padding: 0; list-style: none; }
+  .stores a {
     display: inline-flex;
     align-items: center;
     gap: var(--space-2);

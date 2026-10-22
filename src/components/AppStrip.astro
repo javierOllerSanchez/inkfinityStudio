@@ -26,12 +26,22 @@ const tone = app.color === 'lime' ? 'lavender' : app.color;
       <h3>{app.name}</h3>
       <p>{app.description}</p>
     </div>
-    {app.status === 'disponible' && app.playUrl
+    {app.status === 'disponible' && (app.playUrl || app.appStoreUrl)
       ? (
-        <a class="badge" href={app.playUrl}>
-          <img src="/assets/badges/google-play-es.png" alt={apps.badgeLabel} width="180" height="70" loading="lazy" />
-          <span class="visually-hidden">: {app.name}</span>
-        </a>
+        <div class="badges">
+          {app.playUrl && (
+            <a class="badge" href={app.playUrl}>
+              <img src="/assets/badges/google-play-es.png" alt={apps.badges.play} width="180" height="70" loading="lazy" />
+              <span class="visually-hidden">: {app.name}</span>
+            </a>
+          )}
+          {app.appStoreUrl && (
+            <a class="badge badge--apple" href={app.appStoreUrl}>
+              <img src="/assets/badges/app-store-es.svg" alt={apps.badges.appStore} width="160" height="53" loading="lazy" />
+              <span class="visually-hidden">: {app.name}</span>
+            </a>
+          )}
+        </div>
       )
       : <p class="status">{apps.status[app.status]}</p>}
   </div>
@@ -93,15 +103,19 @@ const tone = app.color === 'lime' ? 'lavender' : app.color;
   .text { display: grid; gap: var(--space-1); }
   h3 { overflow-wrap: anywhere; }
   .text p { font-size: var(--fs-body); }
-  .status, .badge { grid-column: 1 / -1; justify-self: start; }
+  .status, .badges { grid-column: 1 / -1; justify-self: start; }
   .status { font-weight: 700; }
-  /* Insignia oficial de Google Play, sin modificar */
+  .badges { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+  /* Insignias oficiales de las tiendas, sin modificar */
+  .badge { display: block; }
   .badge img { width: 180px; height: auto; }
+  /* La de Google trae su margen dentro del PNG; la de Apple no. A 160 px las dos piezas negras miden lo mismo de alto. */
+  .badge--apple img { width: 160px; }
 
   @media (min-width: 768px) {
     .shots { padding-right: 0; }
     .shots > * { height: 360px; }
     .caption { grid-template-columns: auto 1fr auto; }
-    .status, .badge { grid-column: auto; justify-self: end; }
+    .status, .badges { grid-column: auto; justify-self: end; }
   }
 </style>

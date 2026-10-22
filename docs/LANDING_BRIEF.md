@@ -2,9 +2,9 @@
 
 ## Objetivo
 
-Presentar el estudio, enseñar las apps y llevar a la gente a Google Play. Secundario: que se nos pueda contactar y que exista una URL estable para la política de privacidad.
+Presentar el estudio, enseñar las apps y llevar a la gente a Google Play y al App Store. Secundario: que se nos pueda contactar y que exista una URL estable para la política de privacidad.
 
-**Público:** usuarios de Android curiosos, amigos y conocidos, y gente del sector que quiera ver lo que hacemos.
+**Público:** usuarios de Android e iPhone curiosos, amigos y conocidos, y gente del sector que quiera ver lo que hacemos.
 
 **Acción principal:** «Ver nuestras apps» → sección de apps → insignia de Google Play de cada app.
 **Acción secundaria:** contactar por correo.
