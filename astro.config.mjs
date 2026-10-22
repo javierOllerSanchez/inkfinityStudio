@@ -6,7 +6,9 @@ export default defineConfig({
   // Con dominio propio: site = el dominio y base = '/' (ver docs/PENDIENTES.md)
   site: 'https://javierollersanchez.github.io',
   base: '/inkfinityStudio',
-  integrations: [sitemap()],
+  // Español en la raíz, inglés en /en/
+  i18n: { defaultLocale: 'es', locales: ['es', 'en'], routing: { prefixDefaultLocale: false } },
+  integrations: [sitemap({ i18n: { defaultLocale: 'es', locales: { es: 'es-ES', en: 'en-US' } } })],
   // CSS incrustado en el HTML (~28 KB): sin hojas que bloqueen la primera pintura
   build: { inlineStylesheets: 'always' },
 });

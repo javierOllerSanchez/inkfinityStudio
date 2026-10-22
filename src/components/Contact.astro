@@ -1,7 +1,8 @@
 ---
 import { withBase } from '../base';
-import { contact, site } from '../copy';
+import { getCopy } from '../copy';
 import AsciiReveal from './AsciiReveal.astro';
+const { contact, site } = getCopy(Astro.currentLocale);
 
 // Expresión de Borrón para cada estado de la barra (ver tabla de docs/BRAND.md)
 const faces = {

@@ -1,6 +1,7 @@
 ---
 import TeamMember from './TeamMember.astro';
-import { crew } from '../copy';
+import { getCopy } from '../copy';
+const { crew } = getCopy(Astro.currentLocale);
 
 // Hasta 4 por fila en escritorio; con menos miembros no quedan huecos vacíos
 const cols = Math.min(4, crew.members.length);

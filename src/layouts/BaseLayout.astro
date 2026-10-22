@@ -4,21 +4,28 @@ import '../../design/tokens.css';
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { site } from '../copy';
+import { getCopy } from '../copy';
 
 interface Props {
   title?: string;
   description?: string;
+  // Página con versión en los dos idiomas: da los enlaces hreflang y el del selector de idioma
+  page?: 'home' | 'privacy';
 }
 
-const { title, description = site.description } = Astro.props;
-const fullTitle = title ? `${title} · ${site.name}` : `${site.name} · Apps recién salidas del tintero`;
+const { site } = getCopy(Astro.currentLocale);
+const { title, description = site.description, page } = Astro.props;
+const fullTitle = title ? `${title} · ${site.name}` : `${site.name} · ${site.tagline}`;
+const alternates = page
+  ? (['es', 'en'] as const).map((l) => ({ lang: l, href: new URL(withBase(getCopy(l).paths[page]), Astro.site).href }))
+  : [];
+const other = alternates.find((a) => a.lang !== site.lang);
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(withBase('/og.png'), Astro.site);
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={site.lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -26,6 +33,8 @@ const ogImage = new URL(withBase('/og.png'), Astro.site);
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {alternates.map((a) => <link rel="alternate" hreflang={a.lang} href={a.href} />)}
+    {alternates.length > 0 && <link rel="alternate" hreflang="x-default" href={alternates[0].href} />}
     <meta name="theme-color" content="#15123A" />
 
     <link rel="icon" href={withBase('/favicon.svg')} type="image/svg+xml" />
@@ -38,7 +47,7 @@ const ogImage = new URL(withBase('/og.png'), Astro.site);
     <link rel="preload" href={withBase('/fonts/dm-sans-latin.woff2')} as="font" type="font/woff2" crossorigin />
 
     <meta property="og:type" content="website" />
-    <meta property="og:locale" content="es_ES" />
+    <meta property="og:locale" content={site.ogLocale} />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
@@ -53,8 +62,8 @@ const ogImage = new URL(withBase('/og.png'), Astro.site);
     <meta name="twitter:image" content={ogImage} />
   </head>
   <body>
-    <a class="skip-link" href="#main">Saltar al contenido</a>
-    <Header />
+    <a class="skip-link" href="#main">{site.skip}</a>
+    <Header altHref={other && new URL(other.href).pathname} />
     <main id="main">
       <slot />
     </main>

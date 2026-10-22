@@ -13,7 +13,7 @@ Antes de diseñar o escribir copy, lee:
 - **Astro** (sitio estático) con CSS propio basado en `design/tokens.css`. Sin frameworks de UI ni Tailwind salvo que se pida.
 - JavaScript solo donde aporte (menú móvil, pequeñas animaciones). La página debe funcionar sin JS.
 - Despliegue previsto: sitio estático (Netlify, Vercel o GitHub Pages). No dependas de funciones de servidor.
-- Idioma: español (`lang="es"`). Deja el texto preparado para traducir más adelante (copy agrupado, no disperso por componentes).
+- Idiomas: español en la raíz (`lang="es"`) e inglés en `/en/`. Todo el texto vive en `src/i18n/es.ts` y `src/i18n/en.ts` (mismas claves); los componentes lo piden con `getCopy(Astro.currentLocale)`. Cualquier texto nuevo va en los dos archivos.
 
 ## Estructura objetivo
 
@@ -57,7 +57,7 @@ Mueve o copia `assets/` a `public/assets/` al montar el proyecto y conserva los 
 
 - Para el botón «Disponible en Google Play» usa la **insignia oficial** de Google, descargada de su página de insignias, sin modificarla. No la recrees con CSS.
 - Para el App Store usa igual la **insignia oficial** de Apple («Consíguelo en el App Store»), descargada de Apple Marketing Tools, sin modificarla.
-- Los enlaces del estudio apuntan a las páginas de desarrollador de cada tienda: `site.playDeveloperUrl` y `site.appStoreDeveloperUrl` en `src/copy.ts`.
+- Los enlaces del estudio apuntan a las páginas de desarrollador de cada tienda: `site.playDeveloperUrl` y `site.appStoreDeveloperUrl` en `src/i18n/es.ts` y `en.ts`.
 - La política de privacidad debe estar publicada en una URL estable (`/privacidad`) porque las dos tiendas la piden para cada app.
 
 ## Forma de trabajar

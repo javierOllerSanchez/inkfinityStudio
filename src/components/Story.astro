@@ -1,7 +1,8 @@
 ---
 import { withBase } from '../base';
-import { story } from '../copy';
+import { getCopy } from '../copy';
 import AsciiReveal from './AsciiReveal.astro';
+const { story } = getCopy(Astro.currentLocale);
 ---
 
 <!-- Borrón riso sobre papel · la historia sobre tinta · los hitos en una fila -->

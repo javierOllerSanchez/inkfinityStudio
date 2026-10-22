@@ -1,7 +1,8 @@
 ---
 import { withBase } from '../base';
-import { howWeWork } from '../copy';
+import { getCopy } from '../copy';
 import AsciiReveal from './AsciiReveal.astro';
+const { howWeWork } = getCopy(Astro.currentLocale);
 ---
 
 <!-- Mosaico de frases: Borrón · titular grande · las tres reglas en letra grande -->

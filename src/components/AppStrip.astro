@@ -1,7 +1,8 @@
 ---
 import { withBase } from '../base';
 import type { CollectionEntry } from 'astro:content';
-import { apps } from '../copy';
+import { getCopy } from '../copy';
+const { apps } = getCopy(Astro.currentLocale);
 
 interface Props { app: CollectionEntry<'apps'>['data']; index: number }
 const { app, index } = Astro.props;
@@ -32,13 +33,13 @@ const tone = app.color === 'lime' ? 'lavender' : app.color;
         <div class="badges">
           {app.playUrl && (
             <a class="badge" href={app.playUrl}>
-              <img src={withBase('/assets/badges/google-play-es.png')} alt={apps.badges.play} width="180" height="70" loading="lazy" />
+              <img src={withBase(apps.badges.play.src)} alt={apps.badges.play.alt} width="180" height="70" loading="lazy" />
               <span class="visually-hidden">: {app.name}</span>
             </a>
           )}
           {app.appStoreUrl && (
             <a class="badge badge--apple" href={app.appStoreUrl}>
-              <img src={withBase('/assets/badges/app-store-es.svg')} alt={apps.badges.appStore} width="160" height="53" loading="lazy" />
+              <img src={withBase(apps.badges.appStore.src)} alt={apps.badges.appStore.alt} width="160" height="53" loading="lazy" />
               <span class="visually-hidden">: {app.name}</span>
             </a>
           )}

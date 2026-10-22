@@ -1,8 +1,9 @@
 ---
 import { withBase } from '../base';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { notFound } from '../copy';
+import { getCopy } from '../copy';
 import AsciiReveal from '../components/AsciiReveal.astro';
+const { notFound } = getCopy(Astro.currentLocale);
 ---
 
 <BaseLayout title={notFound.title} description={notFound.text}>

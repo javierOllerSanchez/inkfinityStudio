@@ -1,16 +1,19 @@
 ---
 import { withBase } from '../base';
-import { nav } from '../copy';
+import { getCopy } from '../copy';
+const { nav, paths } = getCopy(Astro.currentLocale);
 
 // Trazo y ventosas del símbolo oficial (assets/logo/inkfinity-symbol-on-dark.svg), en línea para poder
 // dibujar el trazo según el scroll. La forma no cambia; solo cuánto de ella está pintado.
 const tentacle = 'M60 36 C72 15 104 14 106 36 C108 58 76 60 60 36 C44 12 14 14 14 36 C14 54 32 62 44 54 C51 49 46 39 38 43';
 const suckers = [[100, 50], [90, 53.3], [77.5, 50.7]];
+// Misma página en el otro idioma (la da BaseLayout); en la 404 no hay
+const { altHref } = Astro.props as { altHref?: string };
 ---
 
 <!-- Fila de baldosas: símbolo · logotipo y enlaces · acción. El hueco entre baldosas es el fondo del tablero. -->
 <header class="site-header" style={`--drop-mask: url("${withBase('/assets/logo/drop.svg')}")`}>
-  <a href={withBase('/')} class="tile logo" aria-label={nav.home}>
+  <a href={withBase(paths.home)} class="tile logo" aria-label={nav.home}>
     <svg class="symbol" viewBox="0 0 132 90" width="44" height="30" aria-hidden="true">
       <g transform="translate(66 45) rotate(-7) translate(-60 -36)">
         <path class="track" d={tentacle} />
@@ -34,9 +37,12 @@ const suckers = [[100, 50], [90, 53.3], [77.5, 50.7]];
         <li class="drop" aria-hidden="true"></li>
       </ul>
     </nav>
+    {altHref && (
+      <a class="lang" href={altHref} hreflang={nav.switchLang.hreflang} lang={nav.switchLang.hreflang} aria-label={nav.switchLang.name}>{nav.switchLang.label}</a>
+    )}
   </div>
 
-  <a href={withBase('/#apps')} class="tile action">
+  <a href={withBase(paths.apps)} class="tile action">
     <span>{nav.action}</span>
     <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 20 20 4M8 4h12v12" /></svg>
   </a>
@@ -235,6 +241,33 @@ const suckers = [[100, 50], [90, 53.3], [77.5, 50.7]];
     .action svg { opacity: 0; translate: -4px 4px; }
     .action:hover { background: var(--coral-600); }
     .action:hover svg { opacity: 1; translate: 0 0; }
+  }
+
+  /* Móviles estrechos: con el selector de idioma no cabe todo; fuera el logotipo pequeño y la flecha de «Apps» */
+  @media (max-width: 420px) {
+    :global(.js) .links .wordmark { display: none; }
+    .action { padding-inline: var(--space-4); }
+    .action svg { display: none; }
+  }
+
+  /* Selector de idioma: una pastilla discreta al final de la fila de enlaces */
+  .lang {
+    display: grid;
+    place-items: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0 var(--space-2);
+    border-radius: var(--radius-sm);
+    color: var(--white);
+    font-size: var(--fs-small);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    box-shadow: inset 0 0 0 2px var(--ink-800);
+  }
+  .lang:focus-visible { outline-color: var(--lime-400); }
+  @media (hover: hover) and (pointer: fine) {
+    .lang:hover { background: var(--ink-800); }
   }
 
   .menu-btn { display: none; }

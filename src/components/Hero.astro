@@ -1,11 +1,15 @@
 ---
 import { withBase } from '../base';
-import { hero, site } from '../copy';
+import { getCopy } from '../copy';
 import AsciiReveal from './AsciiReveal.astro';
 import borronRaw from '../../public/assets/mascot/borron-chulo-saludando.svg?raw';
+const { hero, site } = getCopy(Astro.currentLocale);
 
 // SVG en línea para poder balancear el tentáculo levantado sin tocar el dibujo.
-const borron = borronRaw.replace('<path d="M160 138', '<path class="wave" d="M160 138');
+// La descripción accesible del dibujo va en el idioma de la página.
+const borron = borronRaw
+  .replace('<path d="M160 138', '<path class="wave" d="M160 138')
+  .replaceAll('Borrón, la mascota de Inkfinity', hero.mascotAlt);
 ---
 
 <!-- Tablero 2×2: logotipo · Borrón · titular · frase + acción -->

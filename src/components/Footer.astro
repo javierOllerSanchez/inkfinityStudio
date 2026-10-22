@@ -1,6 +1,7 @@
 ---
 import { withBase } from '../base';
-import { footer, site } from '../copy';
+import { getCopy } from '../copy';
+const { footer, site, paths } = getCopy(Astro.currentLocale);
 ---
 
 <!-- Las dos últimas filas del tablero: frase · enlaces · ciudad · correo / logotipo grande · apps -->
@@ -14,8 +15,8 @@ import { footer, site } from '../copy';
     <ul>
       <li><a href={site.playDeveloperUrl}>{footer.links.play}</a></li>
       <li><a href={site.appStoreDeveloperUrl}>{footer.links.appStore}</a></li>
-      <li><a href={withBase('/privacidad')}>{footer.links.privacy}</a></li>
-      <li><a href={withBase('/#contacto')}>{footer.links.contact}</a></li>
+      <li><a href={withBase(paths.privacy)}>{footer.links.privacy}</a></li>
+      <li><a href={withBase(paths.contact)}>{footer.links.contact}</a></li>
     </ul>
   </nav>
 
@@ -32,7 +33,7 @@ import { footer, site } from '../copy';
     <img src={withBase('/assets/logo/inkfinity-lockup-horizontal-on-dark.svg')} alt={site.name} width="1070" height="255" loading="lazy" />
   </div>
 
-  <a class="tile play" href={withBase('/#apps')}>
+  <a class="tile play" href={withBase(paths.apps)}>
     <span>{footer.appsInvite}</span>
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20 20 4M8 4h12v12" /></svg>
   </a>

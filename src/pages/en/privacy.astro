@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Privacy from '../../components/Privacy.astro';
+import { getCopy } from '../../copy';
+const { privacy } = getCopy(Astro.currentLocale);
+---
+
+<BaseLayout title={privacy.title} description={privacy.description} page="privacy">
+  <Privacy />
+</BaseLayout>

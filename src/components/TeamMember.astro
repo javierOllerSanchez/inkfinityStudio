@@ -1,8 +1,10 @@
 ---
 import { withBase } from '../base';
-import { crew } from '../copy';
+import { getCopy } from '../copy';
 
-interface Props { member: (typeof crew.members)[number]; index: number }
+import type { Copy } from '../copy';
+const { crew } = getCopy(Astro.currentLocale);
+interface Props { member: Copy['crew']['members'][number]; index: number }
 const { member, index } = Astro.props;
 // Tintes en orden fijo. Sin lima: es solo un chispazo y ya está en el hero.
 const tones = ['coral', 'violet', 'lavender', 'paper'];
@@ -28,7 +30,7 @@ const icons = {
     <ul class="social">
       {member.links.map((l) => (
         <li>
-          <a href={l.href} rel="me" aria-label={`${crew.networks[l.network]} ${crew.of} ${member.name}`}>
+          <a href={l.href} rel="me" aria-label={crew.networkLabel(crew.networks[l.network], member.name)}>
             <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d={icons[l.network]} /></svg>
           </a>
         </li>
