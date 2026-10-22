@@ -44,19 +44,4 @@ if (motion && pointer) {
     });
     el.addEventListener('pointerleave', () => (el.style.translate = ''));
   });
-
-  // Borrón del hero por capas: la escena gira hacia el puntero
-  const hero = document.querySelector<HTMLElement>('.hero');
-  const art = hero?.querySelector<HTMLElement>('.art');
-  if (hero && art) {
-    hero.addEventListener('pointermove', (e) => {
-      const [x, y] = offset(hero, e);
-      art.style.setProperty('--ry', `${x * 30}deg`);
-      art.style.setProperty('--rx', `${-y * 22}deg`);
-    });
-    hero.addEventListener('pointerleave', () => {
-      art.style.removeProperty('--rx');
-      art.style.removeProperty('--ry');
-    });
-  }
 }

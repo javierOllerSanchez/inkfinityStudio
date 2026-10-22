@@ -73,6 +73,7 @@
   /* ---- Layout ---- */
   --container: 1200px;
   --gutter: 16px; /* mínimo en móvil */
+  --board-gap: 8px; /* hueco entre baldosas del tablero (rediseño 2026) */
 
   /* ---- Movimiento ---- */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);

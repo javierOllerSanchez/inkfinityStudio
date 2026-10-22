@@ -2,11 +2,12 @@
 import { nav } from '../copy';
 ---
 
-<header class="site-header theme-ink">
-  <div class="container bar">
-    <a href="/" class="logo" aria-label={nav.home}>
-      <img src="/assets/logo/inkfinity-lockup-horizontal-on-dark.svg" alt="" width="140" height="33" />
-    </a>
+<!-- Fila de baldosas: símbolo · enlaces · acción. El hueco entre baldosas es el fondo del tablero. -->
+<header class="site-header">
+  <a href="/" class="tile logo" aria-label={nav.home}>
+    <img src="/assets/logo/inkfinity-symbol-on-dark.svg" alt="" width="66" height="45" />
+  </a>
+  <div class="tile links">
     <button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">
       <span class="menu-icon" aria-hidden="true"></span>
       {nav.menu}
@@ -17,6 +18,7 @@ import { nav } from '../copy';
       </ul>
     </nav>
   </div>
+  <a href="/#apps" class="tile action">{nav.action}</a>
 </header>
 
 <script>
@@ -36,48 +38,68 @@ import { nav } from '../copy';
     position: sticky;
     top: 0;
     z-index: 50;
-    background: var(--bg);
-    color: var(--text);
-    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: var(--board-gap);
+    padding: var(--board-gap) var(--board-gap) 0;
+    background: var(--ink-950);
   }
-  .bar {
+  .tile {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: var(--space-4);
-    min-height: 64px;
+    min-height: 56px;
+    border-radius: var(--radius-md);
+    background: var(--ink-900);
+    color: var(--white);
   }
-  .logo { display: flex; align-items: center; min-height: 44px; }
-  .logo img { width: 140px; height: auto; }
+  .logo { justify-content: center; width: 72px; flex: none; }
+  .logo img { width: 44px; }
+  .links { flex: 1; justify-content: flex-end; padding-inline: var(--space-3); }
 
-  ul { display: flex; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+  ul { display: flex; gap: var(--space-1); margin: 0; padding: 0; list-style: none; }
   nav a {
     display: flex;
     align-items: center;
     min-height: 44px;
-    padding: 0 var(--space-3);
-    color: var(--text);
+    padding: 0 var(--space-4);
+    color: var(--white);
     font-weight: 700;
     text-decoration: none;
-    border-radius: var(--radius-pill);
+    border-radius: var(--radius-sm);
+    transition: background-color var(--dur-fast) var(--ease-out);
   }
-  nav a:hover { color: var(--lime-400); }
+  nav a:hover { background: var(--ink-800); }
+  nav a:focus-visible { outline-color: var(--lime-400); }
+
+  .action {
+    flex: none;
+    padding-inline: var(--space-5);
+    background: var(--coral-500);
+    color: var(--accent-ink);
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color var(--dur-fast) var(--ease-out);
+  }
+  .action:hover { background: var(--coral-600); }
+  .action:focus-visible { outline-color: var(--lime-400); }
 
   .menu-btn { display: none; }
 
   /* Móvil con JS: el menú se pliega tras un botón. Sin JS, los enlaces siguen visibles. */
   @media (max-width: 767px) {
+    .action { display: none; }
+    :global(.js) .action { display: flex; }
+    nav a { padding: 0 var(--space-2); }
+
     :global(.js) .menu-btn {
       display: inline-flex;
       align-items: center;
       gap: var(--space-2);
       min-height: 44px;
-      padding: 0 var(--space-4);
+      padding: 0 var(--space-3);
       background: transparent;
-      color: var(--text);
-      border: 2px solid var(--border);
-      border-radius: var(--radius-pill);
-      font: 700 var(--fs-small) var(--font-body);
+      color: var(--white);
+      border: 0;
+      font: 700 var(--fs-body) var(--font-body);
       cursor: pointer;
     }
     .menu-icon, .menu-icon::before, .menu-icon::after {
@@ -92,19 +114,18 @@ import { nav } from '../copy';
     .menu-icon::before { top: -5px; }
     .menu-icon::after { top: 5px; }
 
+    /* El desplegable es otra baldosa bajo la fila */
     :global(.js) nav {
       display: none;
       position: absolute;
-      inset: 100% 0 auto;
-      background: var(--bg);
-      border-bottom: 1px solid var(--border);
-      padding: var(--space-2) var(--gutter) var(--space-4);
+      inset: 100% var(--board-gap) auto;
+      margin-top: var(--board-gap);
+      padding: var(--space-2);
+      background: var(--ink-900);
+      border-radius: var(--radius-md);
     }
     :global(.js) nav.open { display: block; }
     :global(.js) ul { flex-direction: column; }
-
-    /* Sin JS, logo algo más pequeño para que quepan los tres enlaces */
-    .logo img { width: 120px; }
-    nav a { padding: 0 var(--space-2); }
+    :global(.js) nav a { font-size: var(--fs-body-lg); padding: 0 var(--space-4); }
   }
 </style>

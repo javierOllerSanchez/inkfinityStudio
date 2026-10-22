@@ -14,6 +14,7 @@ export const nav = {
   home: 'Inkfinity Studio, inicio',
   label: 'Principal',
   menu: 'Menú',
+  action: 'Ver apps',
   links: [
     { href: '/#apps', label: 'Apps' },
     { href: '/#crew', label: 'Crew' },
@@ -28,9 +29,6 @@ export const hero = {
   secondary: 'Conoce a la crew',
   note: '¡recién hecha!',
 };
-
-// Cinta en movimiento bajo el hero (decorativa)
-export const marquee = ['Apps recién salidas del tintero', 'Ideas que no se acaban', 'Pequeñas', 'Útiles', 'Con gracia'];
 
 export const howWeWork = {
   eyebrow: 'Cómo trabajamos',
