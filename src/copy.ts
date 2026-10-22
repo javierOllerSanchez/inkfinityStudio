@@ -31,14 +31,13 @@ export const hero = {
 };
 
 export const howWeWork = {
-  eyebrow: 'Cómo trabajamos',
   title: 'Tres reglas y un pulpo',
   rules: [
-    { icon: 'drop', title: 'Pequeñas.', text: 'Apps que hacen una cosa y la hacen bien. Sin relleno.' },
-    { icon: 'tentacle', title: 'Útiles.', text: 'Si no la usaríamos nosotros, no sale del tintero.' },
-    { icon: 'curl', title: 'Con gracia.', text: 'Un punto de humor en cada pantalla. Sin pasarnos.' },
+    { title: 'Pequeñas.', text: 'Apps que hacen una cosa y la hacen bien. Sin relleno.' },
+    { title: 'Útiles.', text: 'Si no la usaríamos nosotros, no sale del tintero.' },
+    { title: 'Con gracia.', text: 'Un punto de humor en cada pantalla. Sin pasarnos.' },
   ],
-} as const;
+};
 
 export const apps = {
   eyebrow: 'Nuestras apps',

@@ -107,6 +107,20 @@ a { color: var(--link); text-underline-offset: 0.2em; }
 
 .marker { font-family: var(--font-mono); font-size: 0.9em; }
 
+/* Tablero (rediseño 2026): secciones hechas de baldosas planas. Los huecos dejan ver --ink-950. */
+.board {
+  display: grid;
+  gap: var(--board-gap);
+  padding: 0 var(--board-gap) var(--board-gap);
+  background: var(--ink-950);
+}
+.tile {
+  position: relative;
+  overflow: hidden;
+  padding: var(--space-5);
+  border-radius: var(--radius-md);
+}
+
 /* Botones */
 .btn {
   display: inline-flex;

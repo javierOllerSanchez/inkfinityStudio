@@ -7,7 +7,7 @@ const borron = borronRaw.replace('<path d="M160 138', '<path class="wave" d="M16
 ---
 
 <!-- Tablero 2×2: logotipo · Borrón · titular · frase + acción -->
-<section class="hero" aria-labelledby="hero-title">
+<section class="board hero" aria-labelledby="hero-title">
   <div class="tile name">
     <img src="/assets/logo/inkfinity-wordmark-color.svg" alt={site.name} width="1056" height="400" />
   </div>
@@ -33,18 +33,8 @@ const borron = borronRaw.replace('<path d="M160 138', '<path class="wave" d="M16
 </section>
 
 <style>
-  .hero {
-    display: grid;
-    gap: var(--board-gap);
-    padding: var(--board-gap);
-    background: var(--ink-950);
-  }
-  .tile {
-    position: relative;
-    overflow: hidden;
-    padding: var(--space-5);
-    border-radius: var(--radius-md);
-  }
+  /* La cabecera no tiene hueco inferior: el hero pone el suyo */
+  .hero { padding-top: var(--board-gap); }
 
   /* Logotipo: el SVG oficial a todo el ancho de la baldosa, apoyado abajo a la izquierda */
   .name { display: flex; align-items: flex-end; background: var(--lavender-50); }
