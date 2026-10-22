@@ -1,0 +1,106 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { apps } from '../copy';
+
+interface Props { app: CollectionEntry<'apps'>['data']; index: number }
+const { app, index } = Astro.props;
+
+// Mientras no haya capturas, seis pantallas de marcador (las que no caben se cortan contra el borde)
+const shots = app.screenshots.length ? app.screenshots : Array(6).fill('');
+// La lima es solo un chispazo: una app «lima» va en lavanda y la lima queda para su icono
+const tone = app.color === 'lime' ? 'lavender' : app.color;
+---
+
+<li class={`tile strip tone--${tone}`} data-reveal style={`--i:${index + 1}`}>
+  <div class="shots" tabindex="0" role="group" aria-label={`${apps.shots} ${app.name}`}>
+    {shots.map((src) => src
+      ? <img src={src} alt="" width="180" height="390" loading="lazy" />
+      : <span class="shot-placeholder">{apps.shotPlaceholder}</span>)}
+  </div>
+
+  <div class="caption">
+    {app.icon
+      ? <img class="icon" src={app.icon} alt="" width="56" height="56" loading="lazy" />
+      : <span class={`icon icon--${app.color}`} aria-hidden="true" />}
+    <div class="text">
+      <h3>{app.name}</h3>
+      <p>{app.description}</p>
+    </div>
+    {app.status === 'disponible' && app.playUrl
+      ? (
+        <a class="badge" href={app.playUrl}>
+          <img src="/assets/badges/google-play-es.png" alt={apps.badgeLabel} width="180" height="70" loading="lazy" />
+          <span class="visually-hidden">: {app.name}</span>
+        </a>
+      )
+      : <p class="status">{apps.status[app.status]}</p>}
+  </div>
+</li>
+
+<style>
+  .strip { display: grid; gap: var(--space-5); padding: 0 0 var(--space-5); }
+  .tone--coral { background: var(--coral-500); color: var(--accent-ink); }
+  .tone--violet { background: var(--violet-600); color: var(--white); }
+  .tone--ink { background: var(--ink-900); color: var(--white); }
+  .tone--lavender { background: var(--lavender-50); color: var(--accent-ink); }
+
+  /* Fila de capturas: en móvil se desliza con el dedo; en escritorio la última se corta contra el borde */
+  .shots {
+    display: flex;
+    gap: var(--board-gap);
+    padding: var(--space-5) var(--space-5) 0;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--space-5);
+    scrollbar-width: none;
+  }
+  .shots > * {
+    flex: none;
+    height: 300px;
+    aspect-ratio: 9 / 19.5;
+    width: auto;
+    border-radius: var(--radius-sm);
+    scroll-snap-align: start;
+  }
+  .shots img { object-fit: cover; }
+  .shot-placeholder {
+    display: grid;
+    place-items: center;
+    background: var(--lavender-50);
+    color: var(--accent-ink);
+    font-size: var(--fs-small);
+    font-weight: 700;
+  }
+  .tone--lavender .shot-placeholder { background: var(--white); }
+  .shots:focus-visible { outline-offset: -3px; }
+
+  .caption {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: var(--space-4);
+    padding-inline: var(--space-5);
+  }
+  .icon { width: 56px; height: 56px; border-radius: var(--radius-md); }
+  .icon--coral { background: var(--coral-500); }
+  .icon--violet { background: var(--violet-600); }
+  .icon--lime { background: var(--lime-400); }
+  .icon--ink { background: var(--ink-900); }
+  /* El icono de color no se puede perder sobre una franja del mismo color */
+  .tone--coral .icon--coral, .tone--violet .icon--violet, .tone--ink .icon--ink { background: var(--lavender-50); }
+
+  .text { display: grid; gap: var(--space-1); }
+  h3 { overflow-wrap: anywhere; }
+  .text p { font-size: var(--fs-body); }
+  .status, .badge { grid-column: 1 / -1; justify-self: start; }
+  .status { font-weight: 700; }
+  /* Insignia oficial de Google Play, sin modificar */
+  .badge img { width: 180px; height: auto; }
+
+  @media (min-width: 768px) {
+    .shots { padding-right: 0; }
+    .shots > * { height: 360px; }
+    .caption { grid-template-columns: auto 1fr auto; }
+    .status, .badge { grid-column: auto; justify-self: end; }
+  }
+</style>

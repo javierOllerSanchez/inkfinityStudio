@@ -1,50 +1,73 @@
 ---
 import { getCollection } from 'astro:content';
-import AppCard from './AppCard.astro';
-import { apps } from '../copy';
+import AppStrip from './AppStrip.astro';
+import { apps, site } from '../copy';
 
 const entries = (await getCollection('apps')).sort((a, b) => a.data.order - b.data.order);
 ---
 
-<section id="apps" class="section theme-white" aria-labelledby="apps-title">
-  <div class="container">
-    <div class="section-head" data-reveal>
-      <p class="eyebrow">{apps.eyebrow}</p>
+<!-- Una franja por app; a la izquierda, un raíl fijo con el título -->
+<section id="apps" class="board apps" aria-labelledby="apps-title">
+  <div class="tile rail">
+    <div class="rail-inner" data-reveal>
       <h2 id="apps-title">{apps.title}</h2>
+      <p>{apps.lead}</p>
+      <a class="all" href={site.playDeveloperUrl}>{apps.all} <span aria-hidden="true">→</span></a>
     </div>
-    <ul class="grid">
-      {entries.map((e, i) => <AppCard app={e.data} index={i} />)}
-      <li class="next tilt" data-reveal style={`--i:${entries.length + 1}`}>
-        <img class="pop" src="/assets/mascot/borron-mmm.svg" alt="" width="96" height="96" loading="lazy" />
-        <p>{apps.next}</p>
-      </li>
-    </ul>
   </div>
+
+  <ul class="strips">
+    {entries.map((e, i) => <AppStrip app={e.data} index={i} />)}
+    <li class="tile next" data-reveal style={`--i:${entries.length + 1}`}>
+      <img src="/assets/mascot/borron-mmm.svg" alt="" width="480" height="480" loading="lazy" />
+      <p>{apps.next}</p>
+    </li>
+  </ul>
 </section>
 
 <style>
-  .grid {
-    display: grid;
-    gap: var(--space-5);
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-  .next {
-    display: grid;
-    place-content: center;
-    justify-items: center;
-    gap: var(--space-3);
-    min-height: 240px;
-    padding: var(--space-6);
-    border: 2px dashed var(--violet-600);
-    border-radius: var(--radius-lg);
-    text-align: center;
-    color: var(--text-muted);
+  .rail { background: var(--lavender-50); color: var(--accent-ink); }
+  .rail-inner { display: grid; gap: var(--space-4); justify-items: start; }
+  h2 { font-size: clamp(2.5rem, 9vw, 3rem); line-height: 0.95; text-wrap: balance; }
+  .rail p { font-size: var(--fs-body-lg); }
+  .all {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 44px;
+    color: var(--violet-600);
     font-weight: 700;
   }
-  .next img { width: 96px; }
 
-  @media (min-width: 768px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (min-width: 1024px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+  .strips { display: grid; gap: var(--board-gap); margin: 0; padding: 0; list-style: none; }
+
+  .next {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    background: var(--ink-900);
+    color: var(--white);
+  }
+  .next img { width: 96px; flex: none; }
+  .next p {
+    font-family: var(--font-display);
+    font-weight: var(--display-weight);
+    font-stretch: var(--display-stretch);
+    font-variation-settings: "wdth" 75;
+    letter-spacing: var(--display-tracking);
+    font-size: var(--fs-h3);
+    line-height: 1.05;
+  }
+
+  /* Escritorio: raíl de 3 columnas; su contenido se queda fijo mientras pasan las franjas */
+  @media (min-width: 1024px) {
+    .apps { grid-template-columns: repeat(12, 1fr); }
+    .rail { grid-column: 1 / 4; padding: var(--space-6); }
+    .rail-inner { position: sticky; top: calc(56px + 2 * var(--board-gap) + var(--space-6)); }
+    h2 { font-size: clamp(2.5rem, 3.2vw, 3.25rem); }
+    .strips { grid-column: 4 / -1; }
+    .next { padding: var(--space-5) var(--space-6); }
+    .next img { width: 128px; }
+    .next p { font-size: var(--fs-h2); }
+  }
 </style>

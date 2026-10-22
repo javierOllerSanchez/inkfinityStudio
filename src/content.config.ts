@@ -10,6 +10,7 @@ const apps = defineCollection({
     status: z.enum(['disponible', 'pronto', 'tintero']),
     playUrl: z.string().optional(),
     icon: z.string().optional(), // ruta en /public; si falta, se usa `color`
+    screenshots: z.array(z.string()).default([]), // rutas en /public, capturas verticales del móvil
     color: z.enum(['coral', 'violet', 'lime', 'ink']).default('violet'),
     order: z.number().default(0),
   }),

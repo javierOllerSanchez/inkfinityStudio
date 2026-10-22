@@ -40,10 +40,13 @@ export const howWeWork = {
 };
 
 export const apps = {
-  eyebrow: 'Nuestras apps',
   title: 'Lo que ha salido del tintero',
+  lead: 'Pocas y bien hechas. Todas para Android.',
+  all: 'Ver todas en Google Play',
   status: { disponible: 'Disponible', pronto: 'Muy pronto', tintero: 'En el tintero' },
   badgeLabel: 'Disponible en Google Play',
+  shots: 'Capturas de',
+  shotPlaceholder: '[CAPTURA]',
   next: 'La próxima está en el tintero…',
 };
 
