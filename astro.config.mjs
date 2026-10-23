@@ -2,10 +2,8 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  // GitHub Pages de proyecto: https://javierollersanchez.github.io/inkfinityStudio/
-  // Con dominio propio: site = el dominio y base = '/' (ver docs/PENDIENTES.md)
-  site: 'https://javierollersanchez.github.io',
-  base: '/inkfinityStudio',
+  // GitHub Pages con dominio propio (public/CNAME)
+  site: 'https://inkfinitysoft.com',
   // Español en la raíz, inglés en /en/
   i18n: { defaultLocale: 'es', locales: ['es', 'en'], routing: { prefixDefaultLocale: false } },
   integrations: [sitemap({ i18n: { defaultLocale: 'es', locales: { es: 'es-ES', en: 'en-US' } } })],

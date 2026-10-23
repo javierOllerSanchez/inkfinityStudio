@@ -5,7 +5,7 @@ export const site = {
   name: 'Inkfinity Software',
   description:
     'Inkfinity Software: apps para Android e iOS pequeñas, útiles y con un punto de humor, hechas por un grupo de amigos de la carrera.',
-  email: '[CORREO DE CONTACTO]',
+  email: 'support@inkfinitysoft.com',
   playDeveloperUrl: '[ENLACE A LA PÁGINA DE DESARROLLADOR EN GOOGLE PLAY]',
   appStoreDeveloperUrl: '[ENLACE A LA PÁGINA DE DESARROLLADOR EN APP STORE]',
   city: 'Almería',
