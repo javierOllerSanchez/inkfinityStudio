@@ -73,20 +73,28 @@ const { tone = 'ink', design } = Astro.props;
   const fine = matchMedia('(hover: hover) and (pointer: fine)');
   const still = matchMedia('(prefers-reduced-motion: reduce)');
 
+  const RADIUS = 170;
+
   document.querySelectorAll<HTMLElement>('.ascii-reveal').forEach((layer) => {
     const tile = layer.parentElement!;
     const canvas = layer.querySelector('canvas')!;
-    const ctx = canvas.getContext('2d')!;
+    const view = canvas.getContext('2d')!;
+    // El dibujo se pinta en un lienzo aparte y se copia recortado en círculo al visible.
+    // El recorte va en el canvas y no con mask-image: la máscara CSS sobre un canvas vivo
+    // a veces se queda un fotograma atrás y el panel entero parpadea.
+    const buf = document.createElement('canvas');
+    const ctx = buf.getContext('2d')!;
     const field = fields[layer.dataset.design!];
-    let cols = 0, rows = 0, cw = 0, lh = 0, colors: string[] = [];
-    let hovering = false, until = 0, last = 0, loop = 0;
+    let cols = 0, rows = 0, cw = 0, lh = 0, dpr = 1, colors: string[] = [];
+    let hovering = false, last = 0, loop = 0;
 
-    // Ajusta el lienzo al tamaño actual de la baldosa (y a la densidad de píxeles)
+    // Ajusta los lienzos al tamaño actual de la baldosa (y a la densidad de píxeles)
     const fit = () => {
-      const w = tile.clientWidth, h = tile.clientHeight, dpr = Math.min(devicePixelRatio, 2);
+      const w = tile.clientWidth, h = tile.clientHeight;
+      dpr = Math.min(devicePixelRatio, 2);
       if (canvas.width === Math.round(w * dpr) && canvas.height === Math.round(h * dpr)) return;
-      canvas.width = Math.round(w * dpr);
-      canvas.height = Math.round(h * dpr);
+      buf.width = canvas.width = Math.round(w * dpr);
+      buf.height = canvas.height = Math.round(h * dpr);
       canvas.style.width = `${w}px`;
       canvas.style.height = `${h}px`;
       const css = getComputedStyle(layer);
@@ -98,10 +106,11 @@ const { tone = 'ink', design } = Astro.props;
       cols = Math.ceil(w / cw);
       rows = Math.ceil(h / lh);
       colors = ['--ascii', '--ascii-mid', '--ascii-hi'].map((p) => css.getPropertyValue(p).trim());
+      last = 0; // el lienzo nuevo está vacío: hay que repintarlo ya
     };
 
     const draw = (t: number) => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, buf.width, buf.height);
       const k = lh / cw; // una fila mide k anchos de carácter: así los dibujos no salen estirados
       let current = '';
       for (let r = 0; r < rows; r++) {
@@ -116,62 +125,63 @@ const { tone = 'ink', design } = Astro.props;
       }
     };
 
-    // Se anima solo mientras la lente está abierta, a unos 20 fps
+    // La lente sigue al puntero con algo de inercia y se abre al entrar y se cierra al salir.
+    // Lente y recorte van a 60 fps; el dibujo de debajo, a unos 20 (con movimiento reducido, quieto).
+    let x = 0, y = 0, tx = 0, ty = 0, r = 0;
+    let fresh = true; // recién entrado: la lente salta bajo el cursor en vez de deslizarse desde la salida anterior
     const tick = (now: number) => {
-      if (now - last > 50) {
-        draw(now / 1000);
+      const target = hovering ? RADIUS : 0;
+      const k = still.matches ? 1 : 0.2;
+      x += (tx - x) * k;
+      y += (ty - y) * k;
+      r += (target - r) * (still.matches ? 1 : 0.18);
+      if (Math.abs(target - r) < 0.5) r = target;
+      if (!last || (!still.matches && now - last > 50)) {
+        draw(still.matches ? 0 : now / 1000);
         last = now;
       }
-      loop = hovering || now < until ? requestAnimationFrame(tick) : 0;
+      view.clearRect(0, 0, canvas.width, canvas.height);
+      if (r > 0) {
+        view.save();
+        view.beginPath();
+        view.arc(x * dpr, y * dpr, r * dpr, 0, TAU);
+        view.clip();
+        view.drawImage(buf, 0, 0);
+        view.restore();
+      }
+      loop = hovering || r > 0 ? requestAnimationFrame(tick) : 0;
     };
 
-    // La lente sigue al puntero con algo de inercia: decorativo, así que se nota vivo sin ir pegado al ratón
-    let x = 0, y = 0, tx = 0, ty = 0, frame = 0;
-    let fresh = true; // recién entrado: la lente salta bajo el cursor en vez de deslizarse desde la salida anterior
-    const follow = () => {
-      x += (tx - x) * 0.2;
-      y += (ty - y) * 0.2;
-      layer.style.setProperty('--x', `${x}px`);
-      layer.style.setProperty('--y', `${y}px`);
-      frame = Math.abs(tx - x) + Math.abs(ty - y) > 0.5 ? requestAnimationFrame(follow) : 0;
-    };
-
-    tile.addEventListener('pointerenter', () => {
-      if (!fine.matches) return;
-      hovering = true;
-      fit();
-      if (still.matches) draw(0);
-      else if (!loop) loop = requestAnimationFrame(tick);
-    });
-    tile.addEventListener('pointermove', (e) => {
-      if (!fine.matches) return;
-      const r = tile.getBoundingClientRect();
-      tx = e.clientX - r.left;
-      ty = e.clientY - r.top;
-      if (fresh || still.matches) {
+    const aim = (e: PointerEvent) => {
+      const b = tile.getBoundingClientRect();
+      tx = e.clientX - b.left;
+      ty = e.clientY - b.top;
+      if (fresh) {
         x = tx;
         y = ty;
         fresh = false;
       }
-      if (!frame) frame = requestAnimationFrame(follow);
+    };
+
+    tile.addEventListener('pointerenter', (e) => {
+      if (!fine.matches) return;
+      hovering = true;
+      fit();
+      aim(e);
+      if (!loop) loop = requestAnimationFrame(tick);
     });
-    // Al salir la lente se cierra donde estaba (lo hace el CSS) y el dibujo sigue vivo hasta que se cierra
+    tile.addEventListener('pointermove', (e) => {
+      if (fine.matches) aim(e);
+    });
+    // Al salir la lente se cierra donde estaba y el dibujo sigue vivo hasta que se cierra
     tile.addEventListener('pointerleave', () => {
       hovering = false;
       fresh = true;
-      until = performance.now() + 400;
     });
   });
 </script>
 
 <style>
-  /* Radio animable: la lente se abre al entrar y se cierra al salir */
-  @property --r {
-    syntax: '<length>';
-    inherits: false;
-    initial-value: 0px;
-  }
-
   /* La baldosa aísla su apilado para que la capa quede entre su fondo y su contenido */
   :global(.tile:has(> .ascii-reveal)) { isolation: isolate; }
 
@@ -181,23 +191,10 @@ const { tone = 'ink', design } = Astro.props;
     z-index: -1;
     overflow: hidden;
     pointer-events: none;
-    /* Posición de partida aquí y no como valor de reserva en var() */
-    --r: 0px;
-    --x: 50%;
-    --y: 50%;
-    /* Círculo de borde nítido, como el resto de la marca: la máscara recorta, no se ve como degradado */
-    mask-image: radial-gradient(circle var(--r) at var(--x) var(--y), black 97%, transparent 100%); /* taste-skill-ignore: máscara de recorte, no un relleno visible */
   }
   canvas { display: block; }
 
   /* Tres tintas según la densidad del dibujo; la lima solo en lo más denso */
   .ascii-reveal--ink { --ascii: var(--violet-400); --ascii-mid: var(--coral-500); --ascii-hi: var(--lime-400); }
   .ascii-reveal--light { --ascii: var(--violet-300); --ascii-mid: var(--violet-600); --ascii-hi: var(--coral-500); }
-
-  @media (hover: hover) and (pointer: fine) {
-    :global(.tile:hover) > .ascii-reveal { --r: 170px; }
-  }
-  @media (prefers-reduced-motion: no-preference) {
-    .ascii-reveal { transition: --r 320ms var(--ease-out); }
-  }
 </style>
